@@ -2,7 +2,7 @@ import chess
 import chess.engine
 from chessboard import display
 
-# Ruta al ejecutable de Stockfish previamente instalado desde
+# Descargar y extraer toda la carpeta en CHESS/stockfish
 # https://stockfishchess.org/download/windows/
 stockfish_path = "../CHESS/code/stockfish/stockfish-windows-x86-64.exe"
 
