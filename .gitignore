@@ -1,3 +1,4 @@
 .vscode
 !.vscode/launch.json
 stockfish
+__pycache__

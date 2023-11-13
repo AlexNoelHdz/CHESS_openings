@@ -1,6 +1,7 @@
 import chess
 import chess.engine
 from chessboard import display
+from legal_moves import print_all_movements_from_fen
 
 # Descargar y extraer toda la carpeta en CHESS/stockfish
 # https://stockfishchess.org/download/windows/
@@ -29,12 +30,13 @@ def human_move(move_input, board, displayed_board):
         print("Error inesperado.")
 
 def stock_fish_move(board):
-    board_analysis = engine.analyse(board, limit=chess.engine.Limit(time=3))
+    board_analysis = engine.analyse(board, limit=chess.engine.Limit(time=1))
     best_move = board_analysis.get("pv")[0]
     board.push(best_move)
     fen_robot = board.fen()
     display.check_for_quit()
     display.update(fen_robot, displayed_board)
+    print_all_movements_from_fen(fen_robot)
 
 def run_human_white_board(board, displayed_board):
     # Si el turno es del jugador humano
