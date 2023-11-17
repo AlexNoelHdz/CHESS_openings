@@ -14,3 +14,4 @@ Con python recibe una cadena Fen y computa lo siguiente:
 - Una función que cuénte el número de casillas a las que puede escapar el rey de forma segura
 - Una función que cuénte el número de amenazas potenciales que apuntan al rey. 
 - En cada función anterior, pida como parámetro una bandera 'return_casillas'. Si la bandera es true, retornar también separadas por coma las casillas consideradas en el conteo. 
+- Función que cuente el valor de las piezas en el tablero https://www.chess.com/es/terms/el-valor-de-las-piezas-de-ajedrez

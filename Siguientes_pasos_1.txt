@@ -1,2 +1,0 @@
-Las posiciones se miden desde la perspectiva del jugador en turno 
- - considerar en el modelo los mismos metricos para el rival y medir si la efectividad mejora. 
