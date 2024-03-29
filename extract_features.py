@@ -7,6 +7,23 @@ from chess import square_rank, square_file, square
 from chess import PIECE_NAMES, PIECE_TYPES, SQUARES, square_name
 from chess import BISHOP, ROOK, QUEEN
 
+def get_legal_moves_san(fen):
+    """
+    Devuelve una lista con todos los movimientos legales de cada pieza en el tablero
+    para el jugador en turno
+
+    Args:
+    fen (str): La cadena FEN que representa la posición actual del tablero.
+
+    Returns:
+    list: Lista de las casillas de puntos de presión en notación SAN.
+    """
+    legal_moves = {}
+    # Fill legal moves according one piece type
+    for piece_type in PIECE_TYPES:
+        legal_moves[piece_type] = get_legal_moves_from_piece_type(fen, piece_type)
+    return legal_moves
+
 def get_legal_moves_from_piece_type(fen, piece_type):
     """
     Devuelve los movimientos legales de una pieza dada en el turno correspondiente a la posición fen
@@ -112,23 +129,6 @@ def count_pressure_points(fen):
     pressure_points = [1 for _, count in attack_map.items() if count > 1]
 
     return sum(pressure_points)
-
-def get_legal_moves_san(fen):
-    """
-    Devuelve una lista con todos los movimientos legales de cada pieza en el tablero
-    para el jugador en turno
-
-    Args:
-    fen (str): La cadena FEN que representa la posición actual del tablero.
-
-    Returns:
-    list: Lista de las casillas de puntos de presión en notación SAN.
-    """
-    legal_moves = {}
-    # Fill legal moves according one piece type
-    for piece_type in PIECE_TYPES:
-        legal_moves[piece_type] = get_legal_moves_from_piece_type(fen, piece_type)
-    return legal_moves
         
 def get_all_controlled_diagonals(fen):
     """

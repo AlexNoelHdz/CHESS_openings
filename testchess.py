@@ -25,7 +25,7 @@ def human_move(move_input:str, board:Board, displayed_board):
             # Show
             display.update(fen_human, displayed_board)
         else:
-            raise chess.IllegalMoveError()
+            raise chess.IllegalMoveError("Movimiento Ilegal. Intente de nuevo")
     except chess.InvalidMoveError:
         print("Entrada no válida. Utiliza notación SAN (por ejemplo, 'e3').")
     except chess.IllegalMoveError:
