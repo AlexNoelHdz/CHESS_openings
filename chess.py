@@ -14,12 +14,18 @@ def human_move(move_input:str, board:Board, displayed_board):
             display.terminate()
 
         # push movement
-        board.push_san(move_input)
-        # Get fen from board
-        fen_human = board.fen()
-        display.check_for_quit()
-        # Show
-        display.update(fen_human, displayed_board)
+        move = chess.Move.from_uci(move_input)
+        if move in board.legal_moves:
+            # push movement
+            board.push(move)
+            # Get fen from board
+            fen_human = board.fen()
+
+            display.check_for_quit()
+            # Show
+            display.update(fen_human, displayed_board)
+        else:
+            raise chess.IllegalMoveError()
     except chess.InvalidMoveError:
         print("Entrada no válida. Utiliza notación SAN (por ejemplo, 'e3').")
     except chess.IllegalMoveError:
