@@ -1,12 +1,13 @@
 import chess
 import chess.engine
+from chess import Board
 from chessboard import display
 
 # Descargar y extraer toda la carpeta en CHESS/stockfish
 # https://stockfishchess.org/download/windows/
 stockfish_path = "../CHESS/stockfish/stockfish-windows-x86-64.exe"
 
-def human_move(move_input, board, displayed_board):
+def human_move(move_input:str, board:Board, displayed_board):
     try:
         # Salir si el usuario envía x
         if move_input == "x":
