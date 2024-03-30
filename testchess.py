@@ -7,25 +7,27 @@ from chessboard import display
 # https://stockfishchess.org/download/windows/
 stockfish_path = "../CHESS/stockfish/stockfish-windows-x86-64.exe"
 
-def human_move(move_input:str, board:Board, displayed_board):
+def manual_move(move_input:str, board:Board, displayed_board, san_or_uci):
     try:
         # Salir si el usuario envía x
         if move_input == "x":
             display.terminate()
 
-        # push movement
-        move = chess.Move.from_uci(move_input)
-        if move in board.legal_moves:
+        if int(san_or_uci): 
             # push movement
-            board.push(move)
+            board.push_san(move_input)
+        else:
+            # push movement
+            move = chess.Move.from_uci(move_input)
+            if move in board.legal_moves:
+                # push movement
+                board.push(move)
+            
             # Get fen from board
             fen_human = board.fen()
-
             display.check_for_quit()
             # Show
             display.update(fen_human, displayed_board)
-        else:
-            raise chess.IllegalMoveError("Movimiento Ilegal. Intente de nuevo")
     except chess.InvalidMoveError:
         print("Entrada no válida. Utiliza notación SAN (por ejemplo, 'e3').")
     except chess.IllegalMoveError:
@@ -35,7 +37,7 @@ def human_move(move_input:str, board:Board, displayed_board):
     except ValueError:
         print("Error inesperado.")
 
-def stock_fish_move(board):
+def stock_fish_move(board, displayed_board):
     board_analysis = engine.analyse(board, limit=chess.engine.Limit(time=1))
     best_move = board_analysis.get("pv")[0]
     board.push(best_move)
@@ -43,17 +45,17 @@ def stock_fish_move(board):
     display.check_for_quit()
     display.update(fen_robot, displayed_board)
 
-def run_human_white_board(board, displayed_board):
+def run_human_white_board(board, displayed_board, san_or_uci):
     # Si el turno es del jugador humano
     if board.turn == chess.WHITE:
         #Captura el movimiento del humano
         move_input = input("Tu jugada: ")
-        human_move(move_input, board, displayed_board)
+        manual_move(move_input, board, displayed_board, san_or_uci)
     else:
         # Turno del motor Stockfish
-        stock_fish_move(board)
+        stock_fish_move(board, displayed_board)
 
-def run_human_black_board(board, displayed_board):
+def run_human_black_board(board, displayed_board, san_or_uci):
     # Si el turno es del jugador humano
     if board.turn == chess.BLACK:
         # Flip board if necessary
@@ -61,10 +63,10 @@ def run_human_black_board(board, displayed_board):
             display.flip(displayed_board)
         #Captura el movimiento del humano
         move_input = input("Tu jugada: ")
-        human_move(move_input, board, displayed_board)
+        manual_move(move_input, board, displayed_board, san_or_uci)
     else:
         # Turno del motor Stockfish
-        stock_fish_move(board)
+        stock_fish_move(board, displayed_board)
 
 # Iniciar Stockfish engine
 with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
@@ -74,11 +76,12 @@ with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
     # Muestra el tablero en una ventana emergente con tamaño definido en el atributo size
     displayed_board = display.start()
     # Pregunta al humano si quiere jugar con blancas o negras
+    san_or_uci = input("UCI notation: 0. San notation 1: ")
     b_or_w_input = input("Play white 'w' or black 'b': ")
     play_game = run_human_black_board if b_or_w_input == 'b' else run_human_white_board
 
     # Mientras que el board no indique jaque mate
     while not board.is_game_over():
-        play_game(board, displayed_board)
+        play_game(board, displayed_board, san_or_uci)
 
 
