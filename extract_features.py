@@ -280,6 +280,32 @@ def get_current_turn(fen):
     current_turn = tablero.turn # TRUE (WHITE) FALSE (BLACK)
     return current_turn
 
+def get_unique_opening_moves(df, turno, fullmove_number, opening_shortname):
+    """
+    Filtra el DataFrame basado en el 'opening_shortname' proporcionado y retorna los valores únicos
+    del turno.
+    
+    Parámetros:
+    - df: DataFrame a filtrar.
+    - turno: Booleano, True para WHITE, False para BLACK.
+    - fullmove_number: Entero, número de la jugada de la partida de ajedrez.
+    - opening_shortname: String, nombre de la apertura a filtrar.
+    
+    Retorna:
+    - Lista de valores únicos de la columna 'turn_column_name' o None si la columna no existe.
+    """
+    turno_str = "0w" if turno else "1b"
+    turn_column_name = f"{turno_str}_{fullmove_number}"
+    
+    # Filtrar el DataFrame
+    df_filtrado = df[df['opening_shortname'] == opening_shortname]
+    
+    # Verificar si la columna generada existe en el DataFrame filtrado
+    if turn_column_name in df_filtrado.columns:
+        return df_filtrado[turn_column_name].unique()[0]
+    else:
+        return None
+
 # Example FEN string
 # fen_example = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 # fen_example = 'rnbqkb1r/p6p/6pn/1p1pB3/1p6/N2Q2P1/P1P1PP1P/1R2KBNR w Kkq - 0 12'
