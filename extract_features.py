@@ -6,6 +6,7 @@ from chess import Board
 from chess import square_rank, square_file, square
 from chess import PIECE_NAMES, PIECE_TYPES, SQUARES, square_name
 from chess import BISHOP, ROOK, QUEEN
+import random
 
 def get_legal_moves_san(fen):
     """
@@ -280,7 +281,7 @@ def get_current_turn(fen):
     current_turn = tablero.turn # TRUE (WHITE) FALSE (BLACK)
     return current_turn
 
-def get_unique_opening_moves(df, turno, fullmove_number, opening_shortname):
+def get_unique_opening_moves(df, turno, fullmove_number):
     """
     Filtra el DataFrame basado en el 'opening_shortname' proporcionado y retorna los valores únicos
     del turno.
@@ -294,47 +295,70 @@ def get_unique_opening_moves(df, turno, fullmove_number, opening_shortname):
     Retorna:
     - Lista de valores únicos de la columna 'turn_column_name' o None si la columna no existe.
     """
+    if df.empty:
+        return
     turno_str = "0w" if turno else "1b"
     turn_column_name = f"{turno_str}_{fullmove_number}"
     
-    # Filtrar el DataFrame
-    df_filtrado = df[df['opening_shortname'] == opening_shortname]
-    
     # Verificar si la columna generada existe en el DataFrame filtrado
-    if turn_column_name in df_filtrado.columns:
-        return df_filtrado[turn_column_name].unique()[0]
+    if turn_column_name in df.columns:
+        # Calcular la frecuencia de cada valor único
+        value_counts = df[turn_column_name].value_counts(normalize=True)
+        
+        # Obtener las proporciones como enteros y crear la lista de tuplas (valor único, proporción redondeada)
+        # El mínimo peso será 5, para que no existan disparidades 99-0
+        weights = [(value, max(round(proportion * 100), 5)) for value, proportion in value_counts.items()]
+        return weights, turn_column_name
     else:
-        return None
+        return None, None
 
-# Example FEN string
-# fen_example = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-# fen_example = 'rnbqkb1r/p6p/6pn/1p1pB3/1p6/N2Q2P1/P1P1PP1P/1R2KBNR w Kkq - 0 12'
-fen_example = 'rnbqk1nr/pp4pp/2p1p3/b7/3P1B2/2N2N2/PP2PPPP/R2QKB1R b KQkq - 5 7'
+def select_move_by_weighted_choice(weights):
+    """
+    Selecciona un movimiento de ajedrez basado en una lista de pesos para cada movimiento.
+    
+    Parámetros:
+    - weights: Lista de tuplas, donde cada tupla contiene un movimiento (como 'e4') y su peso asociado.
+    
+    Retorna:
+    - Movimiento seleccionado de manera ponderada.
+    """
+    # Desempaquetar la lista de tuplas en movimientos y sus respectivos pesos
+    moves, move_weights = zip(*weights)
+    
+    # Seleccionar un movimiento de manera ponderada basada en los pesos
+    selected_move = random.choices(moves, weights=move_weights, k=1)[0]
+    
+    return selected_move
 
-print(f"Obteniendo datos de la posición FEN: {fen_example}")
+# # Example FEN string
+# # fen_example = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+# # fen_example = 'rnbqkb1r/p6p/6pn/1p1pB3/1p6/N2Q2P1/P1P1PP1P/1R2KBNR w Kkq - 0 12'
+# fen_example = 'rnbqk1nr/pp4pp/2p1p3/b7/3P1B2/2N2N2/PP2PPPP/R2QKB1R b KQkq - 5 7'
 
-for piece_type in PIECE_TYPES:
-    legal_moves = get_legal_moves_from_piece_type(fen_example, piece_type)
-    print(f"{PIECE_NAMES[piece_type]}'s legal moves({len(legal_moves)}): {legal_moves}")
+# print(f"Obteniendo datos de la posición FEN: {fen_example}")
 
 # for piece_type in PIECE_TYPES:
-#     count_legal_moves = count_legal_moves_from_piece_type(fen_example, piece_type)
-#     print(f"{PIECE_NAMES[piece_type]}'s legal moves({count_legal_moves}).")
+#     legal_moves = get_legal_moves_from_piece_type(fen_example, piece_type)
+#     print(f"{PIECE_NAMES[piece_type]}'s legal moves({len(legal_moves)}): {legal_moves}")
 
-pressure_points = get_pressure_points_san(fen_example)
-print(f"Puntos de presión ({len(pressure_points)}): {pressure_points}")
+# # for piece_type in PIECE_TYPES:
+# #     count_legal_moves = count_legal_moves_from_piece_type(fen_example, piece_type)
+# #     print(f"{PIECE_NAMES[piece_type]}'s legal moves({count_legal_moves}).")
 
-# count_pp = count_pressure_points(fen_example)
-# print(f"Puntos de presión ({count_pp})")
+# pressure_points = get_pressure_points_san(fen_example)
+# print(f"Puntos de presión ({len(pressure_points)}): {pressure_points}")
 
-diagonals, diagonals_sum = get_all_controlled_diagonals(fen_example)
-print(f"Diagonales controladas ({diagonals_sum}): {diagonals}")
+# # count_pp = count_pressure_points(fen_example)
+# # print(f"Puntos de presión ({count_pp})")
 
-lines, lines_sum = get_all_controlled_lines(fen_example)
-print(f"Lineas controladas ({lines_sum}): {lines}")
+# diagonals, diagonals_sum = get_all_controlled_diagonals(fen_example)
+# print(f"Diagonales controladas ({diagonals_sum}): {diagonals}")
 
-moves = "e4 e5 Nf3 d6 d4 Nc6 d5 Nb4 a3 Na6 Nc3 Be7 b4 Nf6 Bg5 O-O b5 Nc5 Bxf6 Bxf6 Bd3 Qd7 O-O Nxd3 Qxd3 c6 a4 cxd5 Nxd5 Qe6 Nc7 Qg4 Nxa8 Bd7 Nc7 Rc8 Nd5 Qg6 Nxf6+ Qxf6 Rfd1 Re8 Qxd6 Bg4 Qxf6 gxf6 Rd3 Bxf3 Rxf3 Rd8 Rxf6 Kg7 Rf3 Rd2 Rg3+ Kf8 c3 Re2 f3 Rc2 Rg5 f6 Rh5 Kg7 Rd1 Kg6 Rh3 Rxc3 Rd7 Rc1+ Kf2 Rc2+ Kg3 h5 Rxb7 Kg5 Rxa7 h4+ Rxh4 Rxg2+ Kxg2 Kxh4 b6 Kg5 b7 f5 exf5 Kxf5 b8=Q e4 Rf7+ Kg5 Qg8+ Kh6 Rh7#"
-print(f"Fen from moves: {get_fen_from_moves(moves)}")
+# lines, lines_sum = get_all_controlled_lines(fen_example)
+# print(f"Lineas controladas ({lines_sum}): {lines}")
 
-print(f"Current turn: {'White' if get_current_turn(fen_example) else 'Black'}")
+# moves = "e4 e5 Nf3 d6 d4 Nc6 d5 Nb4 a3 Na6 Nc3 Be7 b4 Nf6 Bg5 O-O b5 Nc5 Bxf6 Bxf6 Bd3 Qd7 O-O Nxd3 Qxd3 c6 a4 cxd5 Nxd5 Qe6 Nc7 Qg4 Nxa8 Bd7 Nc7 Rc8 Nd5 Qg6 Nxf6+ Qxf6 Rfd1 Re8 Qxd6 Bg4 Qxf6 gxf6 Rd3 Bxf3 Rxf3 Rd8 Rxf6 Kg7 Rf3 Rd2 Rg3+ Kf8 c3 Re2 f3 Rc2 Rg5 f6 Rh5 Kg7 Rd1 Kg6 Rh3 Rxc3 Rd7 Rc1+ Kf2 Rc2+ Kg3 h5 Rxb7 Kg5 Rxa7 h4+ Rxh4 Rxg2+ Kxg2 Kxh4 b6 Kg5 b7 f5 exf5 Kxf5 b8=Q e4 Rf7+ Kg5 Qg8+ Kh6 Rh7#"
+# print(f"Fen from moves: {get_fen_from_moves(moves)}")
+
+# print(f"Current turn: {'White' if get_current_turn(fen_example) else 'Black'}")
 

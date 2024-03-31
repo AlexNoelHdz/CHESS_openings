@@ -1,0 +1,29 @@
+import pandas as pd
+import tkinter as tk
+from tkinter import ttk
+
+# Función para mostrar el DataFrame en un cuadro de diálogo emergente
+def mostrar_df_en_dialogo(df):
+    # Crear una ventana emergente
+    ventana = tk.Tk()
+    ventana.title('DataFrame')
+
+    # Crear un Frame para el TreeView
+    frame = ttk.Frame(ventana)
+    frame.pack(fill='both', expand=True)
+
+    # Configurar el TreeView con las columnas del DataFrame
+    tv = ttk.Treeview(frame, columns=list(df.columns), show='headings')
+    tv.pack(fill='both', expand=True)
+
+    # Definir los encabezados del TreeView basándose en las columnas del DataFrame
+    for columna in df.columns:
+        tv.heading(columna, text=columna)
+        tv.column(columna, width=100)  # Configurar el ancho de la columna si es necesario
+
+    # Agregar los datos del DataFrame al TreeView
+    for _, fila in df.iterrows():
+        tv.insert('', 'end', values=list(fila))
+
+    # Ejecutar la ventana emergente
+    ventana.mainloop()
