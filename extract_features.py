@@ -307,12 +307,10 @@ def get_unique_opening_moves(df, turno, fullmove_number):
 
         # Normalización para aumentar la probabilidad de que la máquina te juegue jugadas poco comunes
         # 0-5: 1
-        # 5-30: 5
-        # 30-50: 8
-        # 50-100: 13
+        # 5-50: 5
+        # 50-100: 20
         determine_weight = lambda proportion: 1 if proportion <= 0.05 else \
-                                           8 if proportion <= 0.30 else \
-                                           8 if proportion <= 0.50 else 13
+                                           5 if proportion <= 0.50 else 20
 
         # Crear la lista de tuplas (valor único, peso normalizado) usando la función lambda
         weights = [(value, determine_weight(proportion)) for value, proportion in value_counts.items()]
@@ -320,6 +318,31 @@ def get_unique_opening_moves(df, turno, fullmove_number):
         return weights, turn_column_name
     else:
         return None, None
+
+def get_current_opening(df,turn_column_name, fen, opening_move):
+    """
+    Filtra el DataFrame proporcionado y retorna el opening producido del turno.
+    
+    Parámetros:
+    - df: DataFrame a filtrar.
+    - turn_column_name: Name of column, last played
+    - opening_move: Entero, número de jugada, (2 jugadas por turno).
+    
+    Retorna:
+    - Nombre de la apertura alcanzada
+    """
+    if df.empty:
+        return None
+    turn_column_name = f"{turn_column_name}_fen"
+    
+    # Verificar si la columna generada existe en el DataFrame filtrado
+    if turn_column_name not in df.columns:
+        return None
+    
+    df_filter = df[(df[turn_column_name]==fen) & (df['opening_moves']==opening_move)]
+    if df_filter.empty:
+        return None
+    return df_filter['opening_fullname'].iloc[0]
 
 def select_move_by_weighted_choice(weights):
     """

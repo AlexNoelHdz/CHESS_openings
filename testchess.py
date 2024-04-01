@@ -2,7 +2,7 @@ import chess
 import chess.engine
 from chess import Board
 from chessboard import display
-from extract_features import get_unique_opening_moves, select_move_by_weighted_choice
+from extract_features import get_unique_opening_moves, select_move_by_weighted_choice, get_current_opening
 import pandas as pd
 from chess_helpers import show_df_in_window, ChessLogger
 
@@ -81,10 +81,9 @@ def flip_board_if_needed(displayed_board):
     if not displayed_board.flipped:
         display.flip(displayed_board)
 
-def load_historical_games(opening_shortname):
+def load_historical_games():
     moves_data_path = "../CHESS/data/df_2_just_moves_fen.csv"
     df = pd.read_csv(moves_data_path, encoding='utf-8', engine='python')
-    df = df[df['opening_shortname'] == opening_shortname]
     return df
 
 def apply_played_move_to_df(df, turn_column_name, played_move):
@@ -106,7 +105,9 @@ with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
 
     opening_shortname = input("Apertura a practicar: ")
 
-    df_moves = load_historical_games(opening_shortname)
+    df_moves = load_historical_games()
+
+    df_filter_moves = df_moves[df_moves['opening_shortname'] == opening_shortname].copy()
 
     b_or_w_input = input("Blancas 'w' o negras 'b': ")
 
@@ -116,11 +117,13 @@ with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
 
     while not board.is_game_over():
         unique_opening_moves, turn_column_name = get_unique_opening_moves(
-            df_moves, # Df already filter
+            df_filter_moves, # Df already filter or new
             board.turn, 
             board.fullmove_number)
 
         played_move = play_game(board, displayed_board, unique_opening_moves)
 
-        df_moves = apply_played_move_to_df(df_moves, turn_column_name, played_move)
+        df_filter_moves = apply_played_move_to_df(df_filter_moves, turn_column_name, played_move)
+        opening_reached = get_current_opening(df_moves, turn_column_name, board.fen(), board.ply())
+        print(f"Apertura alcanzada: {opening_reached}")
 
