@@ -296,18 +296,27 @@ def get_unique_opening_moves(df, turno, fullmove_number):
     - Lista de valores únicos de la columna 'turn_column_name' o None si la columna no existe.
     """
     if df.empty:
-        return
+        return None, None
     turno_str = "0w" if turno else "1b"
     turn_column_name = f"{turno_str}_{fullmove_number}"
     
     # Verificar si la columna generada existe en el DataFrame filtrado
     if turn_column_name in df.columns:
         # Calcular la frecuencia de cada valor único
-        value_counts = df[turn_column_name].value_counts(normalize=True)
-        
-        # Obtener las proporciones como enteros y crear la lista de tuplas (valor único, proporción redondeada)
-        # El mínimo peso será 5, para que no existan disparidades 99-0
-        weights = [(value, max(round(proportion * 100), 5)) for value, proportion in value_counts.items()]
+        value_counts = df[turn_column_name].value_counts(normalize=True) # Valores entre 0 y 1
+
+        # Normalización para aumentar la probabilidad de que la máquina te juegue jugadas poco comunes
+        # 0-5: 1
+        # 5-30: 5
+        # 30-50: 8
+        # 50-100: 13
+        determine_weight = lambda proportion: 1 if proportion <= 0.05 else \
+                                           8 if proportion <= 0.30 else \
+                                           8 if proportion <= 0.50 else 13
+
+        # Crear la lista de tuplas (valor único, peso normalizado) usando la función lambda
+        weights = [(value, determine_weight(proportion)) for value, proportion in value_counts.items()]
+    
         return weights, turn_column_name
     else:
         return None, None
@@ -360,5 +369,4 @@ def select_move_by_weighted_choice(weights):
 # moves = "e4 e5 Nf3 d6 d4 Nc6 d5 Nb4 a3 Na6 Nc3 Be7 b4 Nf6 Bg5 O-O b5 Nc5 Bxf6 Bxf6 Bd3 Qd7 O-O Nxd3 Qxd3 c6 a4 cxd5 Nxd5 Qe6 Nc7 Qg4 Nxa8 Bd7 Nc7 Rc8 Nd5 Qg6 Nxf6+ Qxf6 Rfd1 Re8 Qxd6 Bg4 Qxf6 gxf6 Rd3 Bxf3 Rxf3 Rd8 Rxf6 Kg7 Rf3 Rd2 Rg3+ Kf8 c3 Re2 f3 Rc2 Rg5 f6 Rh5 Kg7 Rd1 Kg6 Rh3 Rxc3 Rd7 Rc1+ Kf2 Rc2+ Kg3 h5 Rxb7 Kg5 Rxa7 h4+ Rxh4 Rxg2+ Kxg2 Kxh4 b6 Kg5 b7 f5 exf5 Kxf5 b8=Q e4 Rf7+ Kg5 Qg8+ Kh6 Rh7#"
 # print(f"Fen from moves: {get_fen_from_moves(moves)}")
 
-# print(f"Current turn: {'White' if get_current_turn(fen_example) else 'Black'}")
 

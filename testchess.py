@@ -4,7 +4,7 @@ from chess import Board
 from chessboard import display
 from extract_features import get_unique_opening_moves, select_move_by_weighted_choice
 import pandas as pd
-from chess_helpers import mostrar_df_en_dialogo
+from chess_helpers import mostrar_df_en_dialogo, ChessLogger
 
 # Descargar y extraer toda la carpeta en CHESS/stockfish
 # https://stockfishchess.org/download/windows/
@@ -57,13 +57,13 @@ def run_human_black_board(board, displayed_board, unique_opening_moves):
 
 def run_human_movement(board, displayed_board, unique_opening_moves):
     print("================HUMAN================")
-    if len(unique_opening_moves) > 0:
+    if unique_opening_moves:
         print(f"Movimientos comunes {opening_shortname}: {[move[0] for move in unique_opening_moves]}.")
     move_input = input("Tu movimiento: ")
     return manual_move(move_input, board, displayed_board)
 
 def run_machine_movement(board, displayed_board, unique_opening_moves):
-    if len(unique_opening_moves) > 0:
+    if unique_opening_moves:
         print("================Openings IA================")
         move_input = select_move_by_weighted_choice(unique_opening_moves)
         print(f"Movimientos comunes {opening_shortname}: {[move[0] for move in unique_opening_moves]}.")
@@ -101,6 +101,8 @@ def apply_played_move_to_df(df, turn_column_name, played_move):
 
 with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
     board = chess.Board()
+    logger = ChessLogger("./logs")
+    logger.write(f"=========={logger.filename}==========")
 
     opening_shortname = input("Apertura a practicar: ")
 
