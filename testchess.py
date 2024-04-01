@@ -4,7 +4,7 @@ from chess import Board
 from chessboard import display
 from extract_features import get_unique_opening_moves, select_move_by_weighted_choice
 import pandas as pd
-from chess_helpers import mostrar_df_en_dialogo, ChessLogger
+from chess_helpers import show_df_in_window, ChessLogger
 
 # Descargar y extraer toda la carpeta en CHESS/stockfish
 # https://stockfishchess.org/download/windows/

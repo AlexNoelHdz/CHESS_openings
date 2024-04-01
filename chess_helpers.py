@@ -20,10 +20,10 @@ class ChessLogger:
             log_file.write(text + "\n")
 
 # Función para mostrar el DataFrame en un cuadro de diálogo emergente
-def mostrar_df_en_dialogo(df):
+def show_df_in_window(df, title):
     # Crear una ventana emergente
     ventana = tk.Tk()
-    ventana.title('DataFrame')
+    ventana.title(title)
 
     # Crear un Frame para el TreeView
     frame = ttk.Frame(ventana)
