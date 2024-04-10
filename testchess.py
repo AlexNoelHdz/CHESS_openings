@@ -3,7 +3,7 @@ import chess.engine
 from chess import Board
 from chessboard import display
 from extract_features import get_unique_opening_moves, select_move_by_weighted_choice, get_current_opening, count_all_features, get_all_features
-from extract_features import toggle_turn_on_fen
+from extract_features import get_all_features_uf
 import pandas as pd
 from helpers import ChessLogger
 import pickle
@@ -121,9 +121,9 @@ def print_opening_reached(board, df_moves, turn_column_name):
 
 def show_features(fen, turns):
     logger.write("-----Position-----")
-    df = get_all_features(fen, turns)
+    df = get_all_features_uf(fen, turns)
     logger.write(f"({turns}):{fen}")
-    text_df = df.T.to_string(index=True)
+    text_df = df.to_string(index=True)
     logger.write(text_df)
 
 with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:

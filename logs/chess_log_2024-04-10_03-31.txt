@@ -1,0 +1,81 @@
+================Openings IA================
+Movimientos comunes Sicilian Defense: ['e4', 'Nf3', 'd4', 'g3', 'Nc3', 'c4', 'f4'].
+IA mueve: g3
+Negras: 0.719635. Empate:0.005018. Blancas:0.275347
+-----Position-----
+(1):rnbqkbnr/pppppppp/8/8/8/6P1/PPPPPP1P/RNBQKBNR b KQkq - 0 1
+      Color                   Caracteristica                                                Casillas
+0                                      Moves                                                       1
+1   Blancas    Casillas controladas por peon  ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'f4', 'g3', 'h4']
+2   Blancas  Movimientos legales del caballo                            ['Na3', 'Nc3', 'Nf3', 'Nh3']
+3   Blancas    Movimientos legales del alfil                                          ['Bg2', 'Bh3']
+4   Blancas  Movimientos legales de la torre                                                      []
+5   Blancas  Movimientos legales de la reina                                                      []
+6   Blancas      Movimientos legales del rey                                                      []
+7   Blancas                Puntos de presion              ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'h3']
+8   Blancas           Diagonales controladas                             {'c1': 0, 'f1': 1, 'd1': 0}
+9   Blancas               Lineas controladas                             {'a1': 0, 'h1': 0, 'd1': 0}
+10   Negras    Casillas controladas por peon        ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+11   Negras  Movimientos legales del caballo                            ['Na6', 'Nc6', 'Nf6', 'Nh6']
+12   Negras    Movimientos legales del alfil                                                      []
+13   Negras  Movimientos legales de la torre                                                      []
+14   Negras  Movimientos legales de la reina                                                      []
+15   Negras      Movimientos legales del rey                                                      []
+16   Negras                Puntos de presion        ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+17   Negras           Diagonales controladas                             {'c8': 0, 'f8': 0, 'd8': 0}
+18   Negras               Lineas controladas                             {'a8': 0, 'h8': 0, 'd8': 0}
+Apertura alcanzada: Hungarian Opening
+================HUMAN================
+Movimientos comunes Sicilian Defense: ['c5'].
+Humano mueve: c5
+Negras: 0.930488. Empate:0.002717. Blancas:0.066794
+-----Position-----
+(2):rnbqkbnr/pp1ppppp/8/2p5/8/6P1/PPPPPP1P/RNBQKBNR w KQkq - 0 2
+      Color                   Caracteristica                                                      Casillas
+0                                      Moves                                                             2
+1   Blancas    Casillas controladas por peon        ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'f4', 'g3', 'h4']
+2   Blancas  Movimientos legales del caballo                                  ['Na3', 'Nc3', 'Nf3', 'Nh3']
+3   Blancas    Movimientos legales del alfil                                                ['Bg2', 'Bh3']
+4   Blancas  Movimientos legales de la torre                                                            []
+5   Blancas  Movimientos legales de la reina                                                            []
+6   Blancas      Movimientos legales del rey                                                            []
+7   Blancas                Puntos de presion                    ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'h3']
+8   Blancas           Diagonales controladas                                   {'c1': 0, 'f1': 1, 'd1': 0}
+9   Blancas               Lineas controladas                                   {'a1': 0, 'h1': 0, 'd1': 0}
+10   Negras    Casillas controladas por peon  ['a6', 'b4', 'b6', 'c6', 'd4', 'd6', 'e6', 'f6', 'g6', 'h6']
+11   Negras  Movimientos legales del caballo                                  ['Na6', 'Nc6', 'Nf6', 'Nh6']
+12   Negras    Movimientos legales del alfil                                                            []
+13   Negras  Movimientos legales de la torre                                                            []
+14   Negras  Movimientos legales de la reina                                         ['Qa5', 'Qb6', 'Qc7']
+15   Negras      Movimientos legales del rey                                                            []
+16   Negras                Puntos de presion                    ['a6', 'b6', 'c6', 'e6', 'f6', 'g6', 'h6']
+17   Negras           Diagonales controladas                                   {'c8': 0, 'f8': 0, 'd8': 1}
+18   Negras               Lineas controladas                                   {'a8': 0, 'h8': 0, 'd8': 0}
+Apertura alcanzada: Hungarian Opening: Sicilian Invitation
+================Openings IA================
+IA mueve: c4
+Negras: 0.462613. Empate:0.178748. Blancas:0.358639
+-----Position-----
+(3):rnbqkbnr/pp1ppppp/8/2p5/2P5/6P1/PP1PPP1P/RNBQKBNR b KQkq - 0 2
+      Color                   Caracteristica                                                            Casillas
+0                                      Moves                                                                   3
+1   Blancas    Casillas controladas por peon  ['a3', 'b3', 'b5', 'c3', 'd3', 'd5', 'e3', 'f3', 'f4', 'g3', 'h4']
+2   Blancas  Movimientos legales del caballo                                        ['Na3', 'Nc3', 'Nf3', 'Nh3']
+3   Blancas    Movimientos legales del alfil                                                      ['Bg2', 'Bh3']
+4   Blancas  Movimientos legales de la torre                                                                  []
+5   Blancas  Movimientos legales de la reina                                               ['Qa4', 'Qb3', 'Qc2']
+6   Blancas      Movimientos legales del rey                                                                  []
+7   Blancas                Puntos de presion                                ['a3', 'b3', 'c3', 'e3', 'f3', 'h3']
+8   Blancas           Diagonales controladas                                         {'c1': 0, 'f1': 1, 'd1': 1}
+9   Blancas               Lineas controladas                                         {'a1': 0, 'h1': 0, 'd1': 0}
+10   Negras    Casillas controladas por peon        ['a6', 'b4', 'b6', 'c6', 'd4', 'd6', 'e6', 'f6', 'g6', 'h6']
+11   Negras  Movimientos legales del caballo                                        ['Na6', 'Nc6', 'Nf6', 'Nh6']
+12   Negras    Movimientos legales del alfil                                                                  []
+13   Negras  Movimientos legales de la torre                                                                  []
+14   Negras  Movimientos legales de la reina                                               ['Qa5', 'Qb6', 'Qc7']
+15   Negras      Movimientos legales del rey                                                                  []
+16   Negras                Puntos de presion                          ['a6', 'b6', 'c6', 'e6', 'f6', 'g6', 'h6']
+17   Negras           Diagonales controladas                                         {'c8': 0, 'f8': 0, 'd8': 1}
+18   Negras               Lineas controladas                                         {'a8': 0, 'h8': 0, 'd8': 0}
+================HUMAN================
+Humano mueve: x

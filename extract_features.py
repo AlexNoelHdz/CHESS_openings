@@ -120,12 +120,12 @@ def get_pawn_capture_squares(fen, turn:bool = True):
     diagonals = [-1, 1] # Diagonales izquierda y derecha
     for row in range(8):
         for col in range(8):
-            if board[row][col] == 'P':  # Peón blanco
+            if board[row][col] == 'P':  # Peón Blancas
                 for dcol in diagonals:
                     nrow, ncol = row + direction_white, col + dcol
                     if 0 <= nrow < 8 and 0 <= ncol < 8:  # Verificar límites del tablero
                         captures['white'].add(chr(97 + ncol) + str(8 - nrow))
-            elif board[row][col] == 'p':  # Peón negro
+            elif board[row][col] == 'p':  # Peón Negras
                 for dcol in diagonals:
                     nrow, ncol = row + direction_black, col + dcol
                     if 0 <= nrow < 8 and 0 <= ncol < 8:  # Verificar límites del tablero
@@ -385,7 +385,7 @@ def get_unique_opening_moves(df, turno, fullmove_number):
 
         # Normalización para aumentar la probabilidad de que la máquina te juegue jugadas poco comunes
         # 0-5: 1
-        # 5-50: 5
+        # 5-50: 3
         # 50-100: 20
         determine_weight = lambda proportion: 1 if proportion <= 0.05 else \
                                            5 if proportion <= 0.50 else 20
@@ -501,3 +501,49 @@ def get_all_features(fen:str, moves:int) -> pd.DataFrame:
         'b_ctrld_lines': str(get_all_controlled_lines(fen, False))
         }, index=[0])
     return df
+
+def get_all_features_uf(fen: str, moves: int) -> pd.DataFrame:
+    '''
+    Obtiene todas las features utilizadas para una predicción
+    '''
+    
+    # Características a obtener
+    features = [
+        ('Moves', moves, ''),
+        ('Casillas controladas por peon',get_pawn_capture_squares(fen, True),'Blancas'),
+        ('Movimientos legales del caballo', get_legal_moves_from_piece_type(fen, KNIGHT, True),'Blancas'),
+        ('Movimientos legales del alfil', get_legal_moves_from_piece_type(fen, BISHOP, True) ,'Blancas'),
+        ('Movimientos legales de la torre', get_legal_moves_from_piece_type(fen, ROOK, True),'Blancas'),
+        ('Movimientos legales de la reina', get_legal_moves_from_piece_type(fen, QUEEN, True),'Blancas'),
+        ('Movimientos legales del rey', get_legal_moves_from_piece_type(fen, KING, True),'Blancas'),
+        ('Puntos de presion', get_pressure_points_san(fen, True),'Blancas'),
+        ('Diagonales controladas',get_all_controlled_diagonals(fen, True) ,'Blancas'),
+        ('Lineas controladas', get_all_controlled_lines(fen, True),'Blancas'),
+        ('Casillas controladas por peon',get_pawn_capture_squares(fen, False),'Negras'),
+        ('Movimientos legales del caballo', get_legal_moves_from_piece_type(fen, KNIGHT, False),'Negras'),
+        ('Movimientos legales del alfil', get_legal_moves_from_piece_type(fen, BISHOP, False) ,'Negras'),
+        ('Movimientos legales de la torre', get_legal_moves_from_piece_type(fen, ROOK, False),'Negras'),
+        ('Movimientos legales de la reina', get_legal_moves_from_piece_type(fen, QUEEN, False),'Negras'),
+        ('Movimientos legales del rey', get_legal_moves_from_piece_type(fen, KING, False),'Negras'),
+        ('Puntos de presion', get_pressure_points_san(fen, False),'Negras'),
+        ('Diagonales controladas',get_all_controlled_diagonals(fen, False) ,'Negras'),
+        ('Lineas controladas', get_all_controlled_lines(fen, False),'Negras')
+    ]
+    
+    # Lista para almacenar las filas del DataFrame
+    rows = []
+
+    # Iterar sobre cada característica para ambos colores
+    for feature_name, feature_values, color in features:
+        # total = len(feature_values)
+
+        # Añadir fila al DataFrame
+        rows.append({
+            'Color': color,
+            'Caracteristica': feature_name,
+            'Casillas': str(feature_values),
+            
+            # 'Total': total
+        })
+
+    return pd.DataFrame(rows)
