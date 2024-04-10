@@ -2,10 +2,13 @@ import chess
 import chess.engine
 from chess import Board
 from chessboard import display
-from extract_features import get_unique_opening_moves, select_move_by_weighted_choice, get_current_opening
+from extract_features import get_unique_opening_moves, select_move_by_weighted_choice, get_current_opening, count_all_features, get_all_features
+from extract_features import toggle_turn_on_fen
 import pandas as pd
-from chess_helpers import show_df_in_window, ChessLogger
-
+from helpers import ChessLogger
+import pickle
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # Descargar y extraer toda la carpeta en CHESS/stockfish
 # https://stockfishchess.org/download/windows/
 stockfish_path = "../CHESS/stockfish/stockfish-windows-x86-64.exe"
@@ -56,24 +59,27 @@ def run_human_black_board(board, displayed_board, unique_opening_moves):
         return run_machine_movement(board, displayed_board, unique_opening_moves)
 
 def run_human_movement(board, displayed_board, unique_opening_moves):
-    print("================HUMAN================")
+    logger.write("================HUMAN================")
+    # TODO: Ventajas posicionales (A partir del movimiento 3)
     if unique_opening_moves:
-        print(f"Movimientos comunes {opening_shortname}: {[move[0] for move in unique_opening_moves]}.")
+        logger.write(f"Movimientos comunes {opening_shortname}: {[move[0] for move in unique_opening_moves]}.")
     move_input = input("Tu movimiento: ")
+    logger.write(f"Humano mueve: {move_input}")
     return manual_move(move_input, board, displayed_board)
 
 def run_machine_movement(board, displayed_board, unique_opening_moves):
+    logger.write("================Openings IA================")
     if unique_opening_moves:
-        print("================Openings IA================")
         move_input = select_move_by_weighted_choice(unique_opening_moves)
-        print(f"Movimientos comunes {opening_shortname}: {[move[0] for move in unique_opening_moves]}.")
+        logger.write(f"Movimientos comunes {opening_shortname}: {[move[0] for move in unique_opening_moves]}.")
+        logger.write(f"IA mueve: {move_input}")
         print(f"IA mueve: {move_input}")
         return manual_move(move_input, board, displayed_board)
     else:
-        print("================Openings IA================")
         # Si no existen movimientos para alcanzar alguna posición de apertura
         # Se habilita el motor Stockfish para el resto de la partida
         move_input = stockfish_move(board, displayed_board)
+        logger.write(f"IA mueve: {move_input}")
         print(f"IA mueve: {move_input}")
         return move_input
 
@@ -98,10 +104,32 @@ def apply_played_move_to_df(df, turn_column_name, played_move):
         df = df[df[turn_column_name] == played_move]
     return df
 
+def predict_position(fen, moves, model):
+    features = count_all_features(fen, moves)
+    return model.predict_proba(features)
+
+def print_position_predictions(board, loaded_model):
+    prob = predict_position(board.fen(), board.ply(), loaded_model)
+    position_predictions = f"Negras: {'{:.6f}'.format(prob[0][0])}. Empate:{'{:.6f}'.format(prob[0][1])}. Blancas:{'{:.6f}'.format(prob[0][2])}"
+    logger.write(position_predictions)
+
+def print_opening_reached(board, df_moves, turn_column_name):
+    opening_reached = get_current_opening(df_moves, turn_column_name, board.fen(), board.ply())
+    if opening_reached:
+        logger.write(f"Apertura alcanzada: {opening_reached}")
+        print(f"Apertura alcanzada: {opening_reached}")
+
+def show_features(fen, turns):
+    df = get_all_features(fen, turns)
+    logger.write(f"({turns}):{fen}")
+    text_df = df.T.to_string(index=True)
+    logger.write(text_df)
+
 with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
     board = chess.Board()
     logger = ChessLogger("./logs")
-    logger.write(f"=========={logger.filename}==========")
+
+    loaded_model = pickle.load(open("./pickles/models/xgoboost_model0407.pkl", 'rb'))
 
     opening_shortname = input("Apertura a practicar: ")
 
@@ -121,9 +149,18 @@ with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
             board.turn, 
             board.fullmove_number)
 
+        
+
         played_move = play_game(board, displayed_board, unique_opening_moves)
 
+        print_position_predictions(board, loaded_model)
+        logger.write("-----Turn Position-----")
+        fen_curr_turn = toggle_turn_on_fen(board.fen())
+        show_features(fen_curr_turn, board.ply())
+        logger.write("-----Opponent Position-----")
+        show_features(board.fen(), board.ply())
+
         df_filter_moves = apply_played_move_to_df(df_filter_moves, turn_column_name, played_move)
-        opening_reached = get_current_opening(df_moves, turn_column_name, board.fen(), board.ply())
-        print(f"Apertura alcanzada: {opening_reached}")
+
+        print_opening_reached(board, df_moves, turn_column_name)
 

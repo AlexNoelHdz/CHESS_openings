@@ -4,9 +4,30 @@ desde posiciones dadas por cadenas FEN.
 """
 from chess import Board
 from chess import square_rank, square_file, square
-from chess import PIECE_NAMES, PIECE_TYPES, SQUARES, square_name
-from chess import BISHOP, ROOK, QUEEN
+from chess import PIECE_TYPES, SQUARES, square_name
+from chess import PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
 import random
+import pandas as pd
+
+def toggle_turn_on_fen(fen):
+    """Cambia el turno en un string FEN.
+    Este método tiene la intención de poder calcular características del oponente estableciendo
+    una situación ficticia en la que tu turno es su turno
+    """
+    parts = fen.split(' ')
+    parts[1] = 'w' if parts[1] == 'b' else 'b'
+    return ' '.join(parts)
+
+def get_custom_board(fen, turn = None) -> Board:
+    """Devuelve una instancia de Board con el turno especificado
+    """
+    if turn is not None: # A turn was specified
+        parts = fen.split(' ')
+        parts[1] = 'w' if turn else 'b'
+        fen = ' '.join(parts)
+
+    board = Board(fen)
+    return board
 
 def get_legal_moves_san(fen):
     """
@@ -25,7 +46,7 @@ def get_legal_moves_san(fen):
         legal_moves[piece_type] = get_legal_moves_from_piece_type(fen, piece_type)
     return legal_moves
 
-def get_legal_moves_from_piece_type(fen, piece_type):
+def get_legal_moves_from_piece_type(fen, piece_type, turn = None):
     """
     Devuelve los movimientos legales de una pieza dada en el turno correspondiente a la posición fen
 
@@ -42,12 +63,12 @@ def get_legal_moves_from_piece_type(fen, piece_type):
     Returns:
     list: A list of legal moves for given piece in uci notation.
     """
-    board = Board(fen)
+    board = get_custom_board(fen, turn)
     legal_moves = board.legal_moves
     moves = [board.san(move) for move in legal_moves if board.piece_at(move.from_square).piece_type == piece_type] # move.uci for uci format
     return moves
 
-def count_legal_moves_from_piece_type(fen, piece_type):
+def count_legal_moves_from_piece_type(fen, piece_type, turn = None):
     """
     Cuenta el número de movimientos legales de una pieza dada en el turno correspondiente a la posición fen
 
@@ -64,12 +85,67 @@ def count_legal_moves_from_piece_type(fen, piece_type):
     Returns:
     list: A list of legal moves for given piece in uci notation.
     """
-    board = Board(fen)
+    board = get_custom_board(fen, turn)
     legal_moves = board.legal_moves
     moves = [1 for move in legal_moves if board.piece_at(move.from_square).piece_type == piece_type] # move.uci for uci format
     return sum(moves)
 
-def get_pressure_points_san(fen):
+def get_pawn_capture_squares(fen, turn:bool = True):
+    """Obtiene las casillas controladas por peon (puede comer en siguiente turno) 
+
+    Args:
+        fen (str): Cadena Fen 
+        turn (bool, optional): True: Blancas. False: Negras
+
+    Returns:
+        set: Obtiene las casillas controladas por peon (puede comer en siguiente turno)
+    """
+    # Dividir la cadena FEN para obtener la disposición de las piezas en el tablero
+    board_setup = fen.split()[0]
+
+    # Convertir la disposición del tablero a una matriz 8x8 para facilitar el acceso a cada casilla
+    rows = board_setup.split('/')
+    board = [list(row.replace('8', '........')
+                  .replace('7', '.......')
+                  .replace('6', '......')
+                  .replace('5', '.....')
+                  .replace('4', '....')
+                  .replace('3', '...')
+                  .replace('2', '..')
+                  .replace('1', '.')) for row in rows]
+    captures = {'white': set(), 'black': set()} 
+    # Movimiento diagonal para captura
+    direction_white = -1
+    direction_black = 1
+    diagonals = [-1, 1] # Diagonales izquierda y derecha
+    for row in range(8):
+        for col in range(8):
+            if board[row][col] == 'P':  # Peón blanco
+                for dcol in diagonals:
+                    nrow, ncol = row + direction_white, col + dcol
+                    if 0 <= nrow < 8 and 0 <= ncol < 8:  # Verificar límites del tablero
+                        captures['white'].add(chr(97 + ncol) + str(8 - nrow))
+            elif board[row][col] == 'p':  # Peón negro
+                for dcol in diagonals:
+                    nrow, ncol = row + direction_black, col + dcol
+                    if 0 <= nrow < 8 and 0 <= ncol < 8:  # Verificar límites del tablero
+                        captures['black'].add(chr(97 + ncol) + str(8 - nrow))
+                        
+    return captures['white'] if turn else captures['black']
+
+def count_pawn_capture_squares(fen, turn:bool = True):
+    """Cuenta las casillas controladas por peon (puede comer en siguiente turno) 
+
+    Args:
+        fen (str): Cadena Fen 
+        turn (bool, optional): True: Blancas. False: Negras
+
+    Returns:
+        int: Cuenta las casillas controladas por peon (puede comer en siguiente turno)
+    """              
+    return len(get_pawn_capture_squares(fen, turn))
+
+def get_pressure_points_san(fen, turn = None):
     """
     Devuelve una lista de las casillas que son puntos de presión en notación SAN.
     Un punto de presión se define como una casilla que es atacada por más de una pieza
@@ -81,7 +157,7 @@ def get_pressure_points_san(fen):
     Returns:
     list: Lista de las casillas de puntos de presión en notación SAN.
     """
-    board = Board(fen)
+    board = get_custom_board(fen, turn)
     current_turn = board.turn # TRUE (WHITE) FALSE (BLACK)
     attack_map = {square: 0 for square in SQUARES}
 
@@ -100,7 +176,7 @@ def get_pressure_points_san(fen):
 
     return pressure_points
 
-def count_pressure_points(fen):
+def count_pressure_points(fen, turn = None):
     """
     Cuenta las casillas que son puntos de presión.
     Un punto de presión se define como una casilla que es atacada por más de una pieza
@@ -112,7 +188,7 @@ def count_pressure_points(fen):
     Returns:
     int: Conteo de las casillas de puntos de presión.
     """
-    board = Board(fen)
+    board = get_custom_board(fen, turn)
     current_turn = board.turn # TRUE (WHITE) FALSE (BLACK)
     attack_map = {square: 0 for square in SQUARES}
 
@@ -131,7 +207,7 @@ def count_pressure_points(fen):
 
     return sum(pressure_points)
         
-def get_all_controlled_diagonals(fen):
+def get_all_controlled_diagonals(fen, turn = None):
     """
     Obtiene el número de diagonales controladas por alfiles o reinas en un tablero de ajedrez,
     dado por la notación FEN.
@@ -139,7 +215,7 @@ def get_all_controlled_diagonals(fen):
     pieza del color opuesto.
     """
     # Crear un tablero a partir de la notación FEN
-    tablero = Board(fen)
+    tablero = get_custom_board(fen, turn)
     current_turn = tablero.turn # TRUE (WHITE) FALSE (BLACK)
     diagonales_controladas = {}
     diagonales_controladas_sum  = 0
@@ -152,9 +228,9 @@ def get_all_controlled_diagonals(fen):
             diagonales_controladas[square_name(square)] = result
             diagonales_controladas_sum += result
 
-    return (diagonales_controladas, diagonales_controladas_sum)
+    return diagonales_controladas, f"Total: {diagonales_controladas_sum}"
 
-def count_all_controlled_diagonals(fen):
+def count_all_controlled_diagonals(fen, turn = None):
     """
     Cuenta el número de diagonales controladas por alfiles o reinas en un tablero de ajedrez,
     dado por la notación FEN.
@@ -162,7 +238,7 @@ def count_all_controlled_diagonals(fen):
     pieza del color opuesto.
     """
     # Crear un tablero a partir de la notación FEN
-    tablero = Board(fen)
+    tablero = get_custom_board(fen, turn)
     current_turn = tablero.turn # TRUE (WHITE) FALSE (BLACK)
     diagonales_controladas_sum  = 0
 
@@ -198,13 +274,13 @@ def get_controlled_diagonals_by_square(casilla, board: Board):
             controlled_diagonals += 1
     return controlled_diagonals
 
-def get_all_controlled_lines(fen):
+def get_all_controlled_lines(fen, turn = None):
     """
     Cuenta el número de líneas horizontales y verticales controladas por torres y reina en un tablero de ajedrez,
     dada una determinada posición FEN
     """
     # Crear un tablero a partir de la notación FEN
-    tablero = Board(fen)
+    tablero = get_custom_board(fen, turn)
     current_turn = tablero.turn # TRUE (WHITE) FALSE (BLACK)
     lineas_controladas = {}
     lineas_controladas_sum = 0
@@ -217,15 +293,15 @@ def get_all_controlled_lines(fen):
             lineas_controladas[square_name(square)] = result
             lineas_controladas_sum += result
 
-    return (lineas_controladas, lineas_controladas_sum)
+    return lineas_controladas, f"Total: {lineas_controladas_sum}"
 
-def count_all_controlled_lines(fen):
+def count_all_controlled_lines(fen, turn = None):
     """
     Cuenta el número de líneas horizontales y verticales controladas por torres y reina en un tablero de ajedrez,
     dada una determinada posición FEN
     """
     # Crear un tablero a partir de la notación FEN
-    tablero = Board(fen)
+    tablero = get_custom_board(fen, turn)
     current_turn = tablero.turn # TRUE (WHITE) FALSE (BLACK)
     lineas_controladas_sum = 0
 
@@ -362,34 +438,52 @@ def select_move_by_weighted_choice(weights):
     
     return selected_move
 
-# # Example FEN string
-# # fen_example = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-# # fen_example = 'rnbqkb1r/p6p/6pn/1p1pB3/1p6/N2Q2P1/P1P1PP1P/1R2KBNR w Kkq - 0 12'
-# fen_example = 'rnbqk1nr/pp4pp/2p1p3/b7/3P1B2/2N2N2/PP2PPPP/R2QKB1R b KQkq - 5 7'
+def count_all_features(fen:str, moves:int, turn = None) -> pd.DataFrame:
+    '''
+    Obtiene todas las features utilizadas para una predicción
+    # fen = board.fen()
+    # moves = len(board.move_stack) or board.ply()
+    '''
+    PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING = range(1, 7)
+    
+    df = pd.DataFrame({
+        'turns': moves,
+        'ctrld_pawn': get_pawn_capture_squares(fen, turn),
+        'ctrld_knight': count_legal_moves_from_piece_type(fen, KNIGHT, turn),
+        'ctrld_bishop': count_legal_moves_from_piece_type(fen, BISHOP, turn),
+        'ctrld_rook': count_legal_moves_from_piece_type(fen, ROOK, turn),
+        'ctrld_queen': count_legal_moves_from_piece_type(fen, QUEEN, turn),
+        'ctrld_king': count_legal_moves_from_piece_type(fen, KING, turn),
+        'preassure_points': count_pressure_points(fen, turn),
+        'controlled_diagonals': count_all_controlled_diagonals(fen, turn),
+        'controlled_lines': count_all_controlled_lines(fen, turn)
+        }, index=[0])
+    return df
 
-# print(f"Obteniendo datos de la posición FEN: {fen_example}")
+def get_all_features(fen:str, moves:int, turn:bool = None) -> pd.DataFrame:
+    '''
+    Obtiene todas las features utilizadas para una predicción
+    # fen = board.fen()
+    # moves = len(board.move_stack) or board.ply()
+    '''
+    PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING = range(1, 7)
+    
+    df = pd.DataFrame({
+        'turns': moves,
+        'ctrld_pawn': str(get_pawn_capture_squares(fen, turn)),
+        'ctrld_knight': str(get_legal_moves_from_piece_type(fen, KNIGHT, turn)),
+        'ctrld_bishop': str(get_legal_moves_from_piece_type(fen, BISHOP, turn)),
+        'ctrld_rook': str(get_legal_moves_from_piece_type(fen, ROOK, turn)),
+        'ctrld_queen': str(get_legal_moves_from_piece_type(fen, QUEEN, turn)),
+        'ctrld_king': str(get_legal_moves_from_piece_type(fen, KING, turn)),
+        'preassure_points': str(get_pressure_points_san(fen, turn)),
+        'controlled_diagonals': str(get_all_controlled_diagonals(fen, turn)),
+        'controlled_lines': str(get_all_controlled_lines(fen, turn))
+        }, index=[0])
+    return df
 
-# for piece_type in PIECE_TYPES:
-#     legal_moves = get_legal_moves_from_piece_type(fen_example, piece_type)
-#     print(f"{PIECE_NAMES[piece_type]}'s legal moves({len(legal_moves)}): {legal_moves}")
+fen_example = 'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2'
 
-# # for piece_type in PIECE_TYPES:
-# #     count_legal_moves = count_legal_moves_from_piece_type(fen_example, piece_type)
-# #     print(f"{PIECE_NAMES[piece_type]}'s legal moves({count_legal_moves}).")
-
-# pressure_points = get_pressure_points_san(fen_example)
-# print(f"Puntos de presión ({len(pressure_points)}): {pressure_points}")
-
-# # count_pp = count_pressure_points(fen_example)
-# # print(f"Puntos de presión ({count_pp})")
-
-# diagonals, diagonals_sum = get_all_controlled_diagonals(fen_example)
-# print(f"Diagonales controladas ({diagonals_sum}): {diagonals}")
-
-# lines, lines_sum = get_all_controlled_lines(fen_example)
-# print(f"Lineas controladas ({lines_sum}): {lines}")
-
-# moves = "e4 e5 Nf3 d6 d4 Nc6 d5 Nb4 a3 Na6 Nc3 Be7 b4 Nf6 Bg5 O-O b5 Nc5 Bxf6 Bxf6 Bd3 Qd7 O-O Nxd3 Qxd3 c6 a4 cxd5 Nxd5 Qe6 Nc7 Qg4 Nxa8 Bd7 Nc7 Rc8 Nd5 Qg6 Nxf6+ Qxf6 Rfd1 Re8 Qxd6 Bg4 Qxf6 gxf6 Rd3 Bxf3 Rxf3 Rd8 Rxf6 Kg7 Rf3 Rd2 Rg3+ Kf8 c3 Re2 f3 Rc2 Rg5 f6 Rh5 Kg7 Rd1 Kg6 Rh3 Rxc3 Rd7 Rc1+ Kf2 Rc2+ Kg3 h5 Rxb7 Kg5 Rxa7 h4+ Rxh4 Rxg2+ Kxg2 Kxh4 b6 Kg5 b7 f5 exf5 Kxf5 b8=Q e4 Rf7+ Kg5 Qg8+ Kh6 Rh7#"
-# print(f"Fen from moves: {get_fen_from_moves(moves)}")
-
+df = get_all_features(fen_example, 'n', False).T
+print(df)
 
