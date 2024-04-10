@@ -120,6 +120,7 @@ def print_opening_reached(board, df_moves, turn_column_name):
         print(f"Apertura alcanzada: {opening_reached}")
 
 def show_features(fen, turns):
+    logger.write("-----Position-----")
     df = get_all_features(fen, turns)
     logger.write(f"({turns}):{fen}")
     text_df = df.T.to_string(index=True)
@@ -129,7 +130,7 @@ with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
     board = chess.Board()
     logger = ChessLogger("./logs")
 
-    loaded_model = pickle.load(open("./pickles/models/xgoboost_model0407.pkl", 'rb'))
+    loaded_model = pickle.load(open("./pickles/models/xgoboost_model0410.pkl", 'rb'))
 
     opening_shortname = input("Apertura a practicar: ")
 
@@ -149,15 +150,9 @@ with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
             board.turn, 
             board.fullmove_number)
 
-        
-
         played_move = play_game(board, displayed_board, unique_opening_moves)
 
         print_position_predictions(board, loaded_model)
-        logger.write("-----Turn Position-----")
-        fen_curr_turn = toggle_turn_on_fen(board.fen())
-        show_features(fen_curr_turn, board.ply())
-        logger.write("-----Opponent Position-----")
         show_features(board.fen(), board.ply())
 
         df_filter_moves = apply_played_move_to_df(df_filter_moves, turn_column_name, played_move)

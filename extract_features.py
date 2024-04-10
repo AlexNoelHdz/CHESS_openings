@@ -66,7 +66,7 @@ def get_legal_moves_from_piece_type(fen, piece_type, turn = None):
     board = get_custom_board(fen, turn)
     legal_moves = board.legal_moves
     moves = [board.san(move) for move in legal_moves if board.piece_at(move.from_square).piece_type == piece_type] # move.uci for uci format
-    return moves
+    return sorted(moves)
 
 def count_legal_moves_from_piece_type(fen, piece_type, turn = None):
     """
@@ -129,9 +129,11 @@ def get_pawn_capture_squares(fen, turn:bool = True):
                 for dcol in diagonals:
                     nrow, ncol = row + direction_black, col + dcol
                     if 0 <= nrow < 8 and 0 <= ncol < 8:  # Verificar límites del tablero
-                        captures['black'].add(chr(97 + ncol) + str(8 - nrow))
+                        captures['black'].add(chr(97 + ncol) + str(8 - nrow))               
+    captures_white = sorted(list(captures['white'])) # Ordenar alfabeticamente
+    captures_black = sorted(list(captures['black']))
                         
-    return captures['white'] if turn else captures['black']
+    return captures_white if  turn else captures_black
 
 def count_pawn_capture_squares(fen, turn:bool = True):
     """Cuenta las casillas controladas por peon (puede comer en siguiente turno) 
@@ -174,7 +176,7 @@ def get_pressure_points_san(fen, turn = None):
     # Los puntos de presión son cuadrados a los que más de una pieza ataca
     pressure_points = [square_name(sq) for sq, count in attack_map.items() if count > 1]
 
-    return pressure_points
+    return sorted(pressure_points)
 
 def count_pressure_points(fen, turn = None):
     """
@@ -438,7 +440,7 @@ def select_move_by_weighted_choice(weights):
     
     return selected_move
 
-def count_all_features(fen:str, moves:int, turn:bool = None) -> pd.DataFrame:
+def count_all_features(fen:str, moves:int) -> pd.DataFrame:
     '''
     Obtiene todas las features utilizadas para una predicción
     # fen = board.fen()
@@ -448,19 +450,28 @@ def count_all_features(fen:str, moves:int, turn:bool = None) -> pd.DataFrame:
     
     df = pd.DataFrame({
         'turns': moves,
-        'ctrld_pawn': count_pawn_capture_squares(fen, turn),
-        'ctrld_knight': count_legal_moves_from_piece_type(fen, KNIGHT, turn),
-        'ctrld_bishop': count_legal_moves_from_piece_type(fen, BISHOP, turn),
-        'ctrld_rook': count_legal_moves_from_piece_type(fen, ROOK, turn),
-        'ctrld_queen': count_legal_moves_from_piece_type(fen, QUEEN, turn),
-        'ctrld_king': count_legal_moves_from_piece_type(fen, KING, turn),
-        'preassure_points': count_pressure_points(fen, turn),
-        'controlled_diagonals': count_all_controlled_diagonals(fen, turn),
-        'controlled_lines': count_all_controlled_lines(fen, turn)
+        'w_ctrld_pawn':           count_pawn_capture_squares(fen, True),
+        'w_ctrld_knight':         count_legal_moves_from_piece_type(fen, KNIGHT, True),
+        'w_ctrld_bishop':         count_legal_moves_from_piece_type(fen, BISHOP, True),
+        'w_ctrld_rook':           count_legal_moves_from_piece_type(fen, ROOK, True),
+        'w_ctrld_queen':          count_legal_moves_from_piece_type(fen, QUEEN, True),
+        'w_ctrld_king':           count_legal_moves_from_piece_type(fen, KING, True),
+        'w_preassure_points':     count_pressure_points(fen, True),
+        'w_ctrld_diagonals': count_all_controlled_diagonals(fen, True),
+        'w_ctrld_lines':     count_all_controlled_lines(fen, True),
+        'b_ctrld_pawn':           count_pawn_capture_squares(fen, False),
+        'b_ctrld_knight':         count_legal_moves_from_piece_type(fen, KNIGHT, False),
+        'b_ctrld_bishop':         count_legal_moves_from_piece_type(fen, BISHOP, False),
+        'b_ctrld_rook':           count_legal_moves_from_piece_type(fen, ROOK, False),
+        'b_ctrld_queen':          count_legal_moves_from_piece_type(fen, QUEEN, False),
+        'b_ctrld_king':           count_legal_moves_from_piece_type(fen, KING, False),
+        'b_preassure_points':     count_pressure_points(fen, False),
+        'b_ctrld_diagonals': count_all_controlled_diagonals(fen, False),
+        'b_ctrld_lines':     count_all_controlled_lines(fen, False)
         }, index=[0])
     return df
 
-def get_all_features(fen:str, moves:int, turn:bool = None) -> pd.DataFrame:
+def get_all_features(fen:str, moves:int) -> pd.DataFrame:
     '''
     Obtiene todas las features utilizadas para una predicción
     # fen = board.fen()
@@ -470,14 +481,23 @@ def get_all_features(fen:str, moves:int, turn:bool = None) -> pd.DataFrame:
     
     df = pd.DataFrame({
         'turns': moves,
-        'ctrld_pawn': str(get_pawn_capture_squares(fen, turn)),
-        'ctrld_knight': str(get_legal_moves_from_piece_type(fen, KNIGHT, turn)),
-        'ctrld_bishop': str(get_legal_moves_from_piece_type(fen, BISHOP, turn)),
-        'ctrld_rook': str(get_legal_moves_from_piece_type(fen, ROOK, turn)),
-        'ctrld_queen': str(get_legal_moves_from_piece_type(fen, QUEEN, turn)),
-        'ctrld_king': str(get_legal_moves_from_piece_type(fen, KING, turn)),
-        'preassure_points': str(get_pressure_points_san(fen, turn)),
-        'controlled_diagonals': str(get_all_controlled_diagonals(fen, turn)),
-        'controlled_lines': str(get_all_controlled_lines(fen, turn))
+        'w_ctrld_pawn': str(get_pawn_capture_squares(fen, True)),
+        'w_ctrld_knight': str(get_legal_moves_from_piece_type(fen, KNIGHT, True)),
+        'w_ctrld_bishop': str(get_legal_moves_from_piece_type(fen, BISHOP, True)),
+        'w_ctrld_rook': str(get_legal_moves_from_piece_type(fen, ROOK, True)),
+        'w_ctrld_queen': str(get_legal_moves_from_piece_type(fen, QUEEN, True)),
+        'w_ctrld_king': str(get_legal_moves_from_piece_type(fen, KING, True)),
+        'w_preassure_points': str(get_pressure_points_san(fen, True)),
+        'w_ctrld_diagonals': str(get_all_controlled_diagonals(fen, True)),
+        'w_ctrld_lines': str(get_all_controlled_lines(fen, True)),
+        'b_ctrld_pawn': str(get_pawn_capture_squares(fen, False)),
+        'b_ctrld_knight': str(get_legal_moves_from_piece_type(fen, KNIGHT, False)),
+        'b_ctrld_bishop': str(get_legal_moves_from_piece_type(fen, BISHOP, False)),
+        'b_ctrld_rook': str(get_legal_moves_from_piece_type(fen, ROOK, False)),
+        'b_ctrld_queen': str(get_legal_moves_from_piece_type(fen, QUEEN, False)),
+        'b_ctrld_king': str(get_legal_moves_from_piece_type(fen, KING, False)),
+        'b_preassure_points': str(get_pressure_points_san(fen, False)),
+        'b_ctrld_diagonals': str(get_all_controlled_diagonals(fen, False)),
+        'b_ctrld_lines': str(get_all_controlled_lines(fen, False))
         }, index=[0])
     return df
