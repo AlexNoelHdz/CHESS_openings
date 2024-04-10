@@ -228,7 +228,7 @@ def get_all_controlled_diagonals(fen, turn = None):
             diagonales_controladas[square_name(square)] = result
             diagonales_controladas_sum += result
 
-    return diagonales_controladas, f"Total: {diagonales_controladas_sum}"
+    return diagonales_controladas
 
 def count_all_controlled_diagonals(fen, turn = None):
     """
@@ -293,7 +293,7 @@ def get_all_controlled_lines(fen, turn = None):
             lineas_controladas[square_name(square)] = result
             lineas_controladas_sum += result
 
-    return lineas_controladas, f"Total: {lineas_controladas_sum}"
+    return lineas_controladas
 
 def count_all_controlled_lines(fen, turn = None):
     """
@@ -438,7 +438,7 @@ def select_move_by_weighted_choice(weights):
     
     return selected_move
 
-def count_all_features(fen:str, moves:int, turn = None) -> pd.DataFrame:
+def count_all_features(fen:str, moves:int, turn:bool = None) -> pd.DataFrame:
     '''
     Obtiene todas las features utilizadas para una predicción
     # fen = board.fen()
@@ -448,7 +448,7 @@ def count_all_features(fen:str, moves:int, turn = None) -> pd.DataFrame:
     
     df = pd.DataFrame({
         'turns': moves,
-        'ctrld_pawn': get_pawn_capture_squares(fen, turn),
+        'ctrld_pawn': count_pawn_capture_squares(fen, turn),
         'ctrld_knight': count_legal_moves_from_piece_type(fen, KNIGHT, turn),
         'ctrld_bishop': count_legal_moves_from_piece_type(fen, BISHOP, turn),
         'ctrld_rook': count_legal_moves_from_piece_type(fen, ROOK, turn),
@@ -481,9 +481,3 @@ def get_all_features(fen:str, moves:int, turn:bool = None) -> pd.DataFrame:
         'controlled_lines': str(get_all_controlled_lines(fen, turn))
         }, index=[0])
     return df
-
-fen_example = 'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2'
-
-df = get_all_features(fen_example, 'n', False).T
-print(df)
-
