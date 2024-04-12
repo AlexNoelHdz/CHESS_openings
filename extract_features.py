@@ -359,44 +359,6 @@ def get_current_turn(fen):
     current_turn = tablero.turn # TRUE (WHITE) FALSE (BLACK)
     return current_turn
 
-def get_unique_opening_moves(df, turno, fullmove_number):
-    """
-    Filtra el DataFrame basado en el 'opening_shortname' proporcionado y retorna los valores únicos
-    del turno.
-    
-    Parámetros:
-    - df: DataFrame a filtrar.
-    - turno: Booleano, True para WHITE, False para BLACK.
-    - fullmove_number: Entero, número de la jugada de la partida de ajedrez.
-    - opening_shortname: String, nombre de la apertura a filtrar.
-    
-    Retorna:
-    - Lista de valores únicos de la columna 'turn_column_name' o None si la columna no existe.
-    """
-    if df.empty:
-        return None, None
-    turno_str = "0w" if turno else "1b"
-    turn_column_name = f"{turno_str}_{fullmove_number}"
-    
-    # Verificar si la columna generada existe en el DataFrame filtrado
-    if turn_column_name in df.columns:
-        # Calcular la frecuencia de cada valor único
-        value_counts = df[turn_column_name].value_counts(normalize=True) # Valores entre 0 y 1
-
-        # Normalización para aumentar la probabilidad de que la máquina te juegue jugadas poco comunes
-        # 0-5: 1
-        # 5-50: 3
-        # 50-100: 20
-        determine_weight = lambda proportion: 1 if proportion <= 0.05 else \
-                                           5 if proportion <= 0.50 else 20
-
-        # Crear la lista de tuplas (valor único, peso normalizado) usando la función lambda
-        weights = [(value, determine_weight(proportion)) for value, proportion in value_counts.items()]
-    
-        return weights, turn_column_name
-    else:
-        return None, None
-
 def get_current_opening(df,turn_column_name, fen, opening_move):
     """
     Filtra el DataFrame proporcionado y retorna el opening producido del turno.
@@ -502,48 +464,46 @@ def get_all_features(fen:str, moves:int) -> pd.DataFrame:
         }, index=[0])
     return df
 
-def get_all_features_uf(fen: str, moves: int) -> pd.DataFrame:
+def get_all_features_uf(fen: str, turn: bool) -> pd.DataFrame:
     '''
     Obtiene todas las features utilizadas para una predicción
+    # turn: TRUE (WHITE) FALSE (BLACK)
     '''
-    
     # Características a obtener
+    ctrld_pawn = get_pawn_capture_squares(fen, True)
+    ctrld_knight = get_legal_moves_from_piece_type(fen, KNIGHT, True)
+    ctrld_bishop = get_legal_moves_from_piece_type(fen, BISHOP, True)
+    ctrld_rook = get_legal_moves_from_piece_type(fen, ROOK, True)
+    ctrld_queen = get_legal_moves_from_piece_type(fen, QUEEN, True)
+    ctrld_king = get_legal_moves_from_piece_type(fen, KING, True)
+    preassure_points = get_pressure_points_san(fen, True)
+    ctrld_diagonals = get_all_controlled_diagonals(fen, True)
+    ctrld_lines = get_all_controlled_lines(fen, True)
+
     features = [
-        ('Moves', moves, ''),
-        ('Casillas controladas por peon',get_pawn_capture_squares(fen, True),'Blancas'),
-        ('Movimientos legales del caballo', get_legal_moves_from_piece_type(fen, KNIGHT, True),'Blancas'),
-        ('Movimientos legales del alfil', get_legal_moves_from_piece_type(fen, BISHOP, True) ,'Blancas'),
-        ('Movimientos legales de la torre', get_legal_moves_from_piece_type(fen, ROOK, True),'Blancas'),
-        ('Movimientos legales de la reina', get_legal_moves_from_piece_type(fen, QUEEN, True),'Blancas'),
-        ('Movimientos legales del rey', get_legal_moves_from_piece_type(fen, KING, True),'Blancas'),
-        ('Puntos de presion', get_pressure_points_san(fen, True),'Blancas'),
-        ('Diagonales controladas',get_all_controlled_diagonals(fen, True) ,'Blancas'),
-        ('Lineas controladas', get_all_controlled_lines(fen, True),'Blancas'),
-        ('Casillas controladas por peon',get_pawn_capture_squares(fen, False),'Negras'),
-        ('Movimientos legales del caballo', get_legal_moves_from_piece_type(fen, KNIGHT, False),'Negras'),
-        ('Movimientos legales del alfil', get_legal_moves_from_piece_type(fen, BISHOP, False) ,'Negras'),
-        ('Movimientos legales de la torre', get_legal_moves_from_piece_type(fen, ROOK, False),'Negras'),
-        ('Movimientos legales de la reina', get_legal_moves_from_piece_type(fen, QUEEN, False),'Negras'),
-        ('Movimientos legales del rey', get_legal_moves_from_piece_type(fen, KING, False),'Negras'),
-        ('Puntos de presion', get_pressure_points_san(fen, False),'Negras'),
-        ('Diagonales controladas',get_all_controlled_diagonals(fen, False) ,'Negras'),
-        ('Lineas controladas', get_all_controlled_lines(fen, False),'Negras')
+        ('Casillas controladas por peon',ctrld_pawn, len(ctrld_pawn)),
+        ('Casillas controladas por caballo',ctrld_knight, len(ctrld_knight)),
+        ('Casillas controladas por alfil', ctrld_bishop, len(ctrld_bishop)),
+        ('Casillas controladas por torre', ctrld_rook, len(ctrld_rook)),
+        ('Casillas controladas por reina', ctrld_queen, len(ctrld_queen)),
+        ('Casillas controladas por el rey', ctrld_king, len(ctrld_king)),
+        ('Puntos de presion (>1 atacando)', preassure_points, len(preassure_points)),
+        ('Diagonales controladas', ctrld_diagonals, sum(ctrld_diagonals.values())),
+        ('Lineas controladas', ctrld_lines, sum(ctrld_lines.values())),
     ]
     
     # Lista para almacenar las filas del DataFrame
     rows = []
 
     # Iterar sobre cada característica para ambos colores
-    for feature_name, feature_values, color in features:
+    for feature_name, feature_values, total in features:
         # total = len(feature_values)
 
         # Añadir fila al DataFrame
         rows.append({
-            'Color': color,
+            'Total': total,
             'Caracteristica': feature_name,
-            'Casillas': str(feature_values),
-            
-            # 'Total': total
+            'Casillas': str(feature_values)
         })
 
     return pd.DataFrame(rows)

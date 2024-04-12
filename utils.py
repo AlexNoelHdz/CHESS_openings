@@ -5,6 +5,8 @@ import datetime
 from tkinter import font
 import subprocess
 import sys
+import os
+import platform
 
 class ChessLogger:
     def __init__(self, path, filename_format="chess_log_%Y-%m-%d_%H-%M.txt"):
@@ -25,10 +27,11 @@ class ChessLogger:
 def open_file(ruta_archivo):
     if sys.platform == "win32":
         subprocess.run(["start", ruta_archivo], shell=True)
-    elif sys.platform == "darwin": #IOS
-        subprocess.run(["open", ruta_archivo])
     elif sys.platform == "linux":
         subprocess.run(["xdg-open", ruta_archivo])
+    else: #IOS
+        subprocess.run(["open", ruta_archivo])
+    
 
 # Función para mostrar el DataFrame en un cuadro de diálogo emergente
 def show_df_in_window(df, title):
@@ -64,3 +67,11 @@ def show_df_in_window(df, title):
         tree.insert("", "end", values=list(row))
 
     window.mainloop()
+
+def clean_console():
+    sistema_operativo = platform.system()
+    if sistema_operativo == 'Windows':
+        os.system('cls')  # Para Windows
+    else:
+        os.system('clear')  # Para Unix/Linux/MacOS
+
