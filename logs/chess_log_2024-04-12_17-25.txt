@@ -1,0 +1,60 @@
+Apertura a practicar English Opening
+================HUMAN================
+Movimientos comunes English Opening: ['c4', 'Nf3', 'e4', 'd4', 'e3', 'g3'].
+Humano mueve: c4
+Negras: 0.667568. Empate:0.002223. Blancas:0.330209
+-----Turno 1:rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR b KQkq - 0 1-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                      Casillas
+0     10     Casillas controladas por peon  ['a3', 'b3', 'b5', 'c3', 'd3', 'd5', 'e3', 'f3', 'g3', 'h3']
+1      4  Casillas controladas por caballo                                  ['Na3', 'Nc3', 'Nf3', 'Nh3']
+2      0    Casillas controladas por alfil                                                            []
+3      0    Casillas controladas por torre                                                            []
+4      3    Casillas controladas por reina                                         ['Qa4', 'Qb3', 'Qc2']
+5      0   Casillas controladas por el rey                                                            []
+6      7   Puntos de presion (>1 atacando)                    ['a3', 'b3', 'c3', 'e3', 'f3', 'g3', 'h3']
+7      1            Diagonales controladas                                   {'c1': 0, 'f1': 0, 'd1': 1}
+8      0                Lineas controladas                                   {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                         Casillas
+     8    Casillas controladas por peon ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     4 Casillas controladas por caballo                     ['Na6', 'Nc6', 'Nf6', 'Nh6']
+     0   Casillas controladas por alfil                                               []
+     0   Casillas controladas por torre                                               []
+     0   Casillas controladas por reina                                               []
+     0  Casillas controladas por el rey                                               []
+     8  Puntos de presion (>1 atacando) ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     0           Diagonales controladas                      {'c8': 0, 'f8': 0, 'd8': 0}
+     0               Lineas controladas                      {'a8': 0, 'h8': 0, 'd8': 0}
+Apertura alcanzada: English Opening
+================Openings IA================
+Movimientos comunes English Opening: ['e5', 'Nf6', 'c5', 'd5', 'e6', 'Nc6', 'g6', 'c6', 'f5', 'b5'].
+IA mueve: e5
+Negras: 0.920157. Empate:0.001144. Blancas:0.078699
+-----Turno 2:rnbqkbnr/pppp1ppp/8/4p3/2P5/8/PP1PPPPP/RNBQKBNR w KQkq - 0 2-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                      Casillas
+0     10     Casillas controladas por peon  ['a3', 'b3', 'b5', 'c3', 'd3', 'd5', 'e3', 'f3', 'g3', 'h3']
+1      4  Casillas controladas por caballo                                  ['Na3', 'Nc3', 'Nf3', 'Nh3']
+2      0    Casillas controladas por alfil                                                            []
+3      0    Casillas controladas por torre                                                            []
+4      3    Casillas controladas por reina                                         ['Qa4', 'Qb3', 'Qc2']
+5      0   Casillas controladas por el rey                                                            []
+6      7   Puntos de presion (>1 atacando)                    ['a3', 'b3', 'c3', 'e3', 'f3', 'g3', 'h3']
+7      1            Diagonales controladas                                   {'c1': 0, 'f1': 0, 'd1': 1}
+8      0                Lineas controladas                                   {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                                     Casillas
+    10    Casillas controladas por peon ['a6', 'b6', 'c6', 'd4', 'd6', 'e6', 'f4', 'f6', 'g6', 'h6']
+     5 Casillas controladas por caballo                          ['Na6', 'Nc6', 'Ne7', 'Nf6', 'Nh6']
+     5   Casillas controladas por alfil                          ['Ba3', 'Bb4', 'Bc5', 'Bd6', 'Be7']
+     0   Casillas controladas por torre                                                           []
+     4   Casillas controladas por reina                                 ['Qe7', 'Qf6', 'Qg5', 'Qh4']
+     1  Casillas controladas por el rey                                                      ['Ke7']
+     9  Puntos de presion (>1 atacando)       ['a6', 'b6', 'c6', 'd6', 'e6', 'e7', 'f6', 'g6', 'h6']
+     2           Diagonales controladas                                  {'c8': 0, 'f8': 1, 'd8': 1}
+     0               Lineas controladas                                  {'a8': 0, 'h8': 0, 'd8': 0}
+Apertura alcanzada: English Opening: King's English Variation
+================HUMAN================
+Movimientos comunes English Opening: ['Nc3', 'e4', 'Nf3', 'g3'].
+Humano mueve: x

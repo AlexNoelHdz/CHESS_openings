@@ -470,15 +470,15 @@ def get_all_features_uf(fen: str, turn: bool) -> pd.DataFrame:
     # turn: TRUE (WHITE) FALSE (BLACK)
     '''
     # Características a obtener
-    ctrld_pawn = get_pawn_capture_squares(fen, True)
-    ctrld_knight = get_legal_moves_from_piece_type(fen, KNIGHT, True)
-    ctrld_bishop = get_legal_moves_from_piece_type(fen, BISHOP, True)
-    ctrld_rook = get_legal_moves_from_piece_type(fen, ROOK, True)
-    ctrld_queen = get_legal_moves_from_piece_type(fen, QUEEN, True)
-    ctrld_king = get_legal_moves_from_piece_type(fen, KING, True)
-    preassure_points = get_pressure_points_san(fen, True)
-    ctrld_diagonals = get_all_controlled_diagonals(fen, True)
-    ctrld_lines = get_all_controlled_lines(fen, True)
+    ctrld_pawn = get_pawn_capture_squares(fen, turn)
+    ctrld_knight = get_legal_moves_from_piece_type(fen, KNIGHT, turn)
+    ctrld_bishop = get_legal_moves_from_piece_type(fen, BISHOP, turn)
+    ctrld_rook = get_legal_moves_from_piece_type(fen, ROOK, turn)
+    ctrld_queen = get_legal_moves_from_piece_type(fen, QUEEN, turn)
+    ctrld_king = get_legal_moves_from_piece_type(fen, KING, turn)
+    preassure_points = get_pressure_points_san(fen, turn)
+    ctrld_diagonals = get_all_controlled_diagonals(fen, turn)
+    ctrld_lines = get_all_controlled_lines(fen, turn)
 
     features = [
         ('Casillas controladas por peon',ctrld_pawn, len(ctrld_pawn)),
