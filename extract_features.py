@@ -5,7 +5,7 @@ desde posiciones dadas por cadenas FEN.
 from chess import Board
 from chess import square_rank, square_file, square
 from chess import PIECE_TYPES, SQUARES, square_name
-from chess import PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING
+from chess import KNIGHT, BISHOP, ROOK, QUEEN, KING
 import random
 import pandas as pd
 
