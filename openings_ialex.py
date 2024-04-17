@@ -2,7 +2,7 @@ import chess
 import chess.engine
 from chess import Board
 from chessboard import display
-from extract_features import select_move_by_weighted_choice, get_current_opening, count_all_features
+from extract_features import get_current_opening, count_all_features
 from extract_features import get_all_features_uf
 import pandas as pd
 from utils import ChessLogger
@@ -89,7 +89,7 @@ class OpeningsIA:
         if unique_opening_moves:
             self.logger.write(f"Movimientos comunes {self.opening_shortname}: {[move[0] for move in unique_opening_moves]}.")
             print(f"Movimientos comunes {self.opening_shortname}: {[move[0] for move in unique_opening_moves]}.")
-            move_input = select_move_by_weighted_choice(unique_opening_moves)
+            move_input = self.select_move_by_weighted_choice(unique_opening_moves)
             self.logger.write(f"IA mueve: {move_input}")
             print(f"IA mueve: {move_input}")
             return self.manual_move(move_input, board, displayed_board)
@@ -157,20 +157,44 @@ class OpeningsIA:
      return self.df_hist_moves[self.df_hist_moves['opening_shortname'] == self.opening_shortname].copy()
     
     def select_random_opening(self):
+        # Calcula las proporciones de cada apertura en el conjunto de datos
         counts = self.df_hist_moves['opening_shortname'].value_counts()
         weights = counts / counts.sum()
 
-        # Ajuste para que no existan aperturas cuya probabilidad de salir sea menor que 1%
-        # El peso total no será 1, pero se balancea
-        adjusted_weights =  np.maximum(weights, 0.01)
-        integer_weights = np.round(adjusted_weights * 100).astype(int)
-        opening_selected = random.choices(integer_weights.index, weights=integer_weights.values, k=1)[0]
+        # Redondea las proporciones a dos decimales y convierte a porcentajes
+        rounded_weights = np.round(weights, 2) * 100
+
+        # Ajuste para asegurar que ninguna apertura tenga una probabilidad menor que 1%
+        adjusted_weights = np.maximum(rounded_weights, 1).astype(int)
+
+        # Selecciona una apertura al azar basado en los pesos ajustados
+        opening_selected = random.choices(adjusted_weights.index, weights=adjusted_weights.values, k=1)[0]
+        
+        # Muestra e imprime la apertura seleccionada
         print(f"Apertura a practicar {opening_selected}")
         self.logger.write(f"Apertura a practicar {opening_selected}")
+
         return opening_selected
     
     def select_random_color(self):
         return random.choice(['w', 'b'])
+    
+    def select_move_by_weighted_choice(self, weights):
+        """
+        Selecciona un movimiento de ajedrez basado en una lista de pesos para cada movimiento.
+        
+        Parámetros:
+        - weights: Lista de tuplas, donde cada tupla contiene un movimiento (como 'e4') y su peso asociado.
+        
+        Retorna:
+        - Movimiento seleccionado de manera ponderada.
+        """
+        # Desempaquetar la lista de tuplas en movimientos y sus respectivos pesos
+        moves, move_weights = zip(*weights) # from get_unique_opening_moves
+        
+        # Seleccionar un movimiento de manera ponderada basada en los pesos
+        selected_move = random.choices(moves, weights=move_weights, k=1)[0] 
+        return selected_move
     
     def get_unique_opening_moves(self, turno, fullmove_number):
         """

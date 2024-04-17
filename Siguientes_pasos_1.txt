@@ -1,9 +1,0 @@
-Hacer todos commit y push
-En conjunto homologar main y hacer rebase con el formato actual 
-Homologar un solo script de preprocesamiento oficial de producción
-- Pasar notebooks a script
-- Revisar el config
-- Revisar en el preprocesado guardar pickel
-Completar el readme.md
-Revisar entre todos el benchamark 
-

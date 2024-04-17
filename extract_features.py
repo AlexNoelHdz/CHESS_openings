@@ -384,23 +384,6 @@ def get_current_opening(df,turn_column_name, fen, opening_move):
         return None
     return df_filter['opening_fullname'].iloc[0]
 
-def select_move_by_weighted_choice(weights):
-    """
-    Selecciona un movimiento de ajedrez basado en una lista de pesos para cada movimiento.
-    
-    Parámetros:
-    - weights: Lista de tuplas, donde cada tupla contiene un movimiento (como 'e4') y su peso asociado.
-    
-    Retorna:
-    - Movimiento seleccionado de manera ponderada.
-    """
-    # Desempaquetar la lista de tuplas en movimientos y sus respectivos pesos
-    moves, move_weights = zip(*weights)
-    
-    # Seleccionar un movimiento de manera ponderada basada en los pesos
-    selected_move = random.choices(moves, weights=move_weights, k=1)[0]
-    
-    return selected_move
 
 def count_all_features(fen:str, moves:int) -> pd.DataFrame:
     '''

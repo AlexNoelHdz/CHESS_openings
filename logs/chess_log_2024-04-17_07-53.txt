@@ -1,0 +1,4 @@
+Apertura a practicar Amazon Attack
+================HUMAN================
+Movimientos comunes Amazon Attack: ['d4'].
+Humano mueve: x

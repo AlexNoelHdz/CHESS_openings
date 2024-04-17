@@ -2,12 +2,14 @@
 from sklearn.metrics import (accuracy_score, precision_score, recall_score)
 from sklearn.metrics import (brier_score_loss, roc_auc_score, confusion_matrix)
 from sklearn.metrics import auc as func_auc
-from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import precision_recall_curve, roc_curve
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer
+
+
 warnings.filterwarnings('ignore')
 
 def one_hot_encode_labels(y):
@@ -52,74 +54,83 @@ def eval_perform(Y,y_pred = None, y_prob = None, train_or_test: str = None, prin
     return accu, prec, reca, brier_score, auc, cfm, pr_auc
 
 
-def eval_perform_multi_class(Y, y_pred=None, y_prob=None, n_classes = None, train_or_test: str=None, print_results=True):
+def eval_perform_multi_class(Y, y_pred=None, y_prob=None, class_names = None, model_name: str=None, print_results=True):
     """Evalúa el rendimiento de cada modelo para clasificación multiclase.
 
     Args:
         Y (array): Variable objetivo original.
         y_pred (array): Salida Y & "hat" (ŷ) que denota predicciones estimadas.
         y_prob (array): Salida Y & "hat" (ŷ) que denota probabilidades estimadas.
-        train_or_test (string): "Entrenamiento" o "Prueba".
+        model_name (string): Nombre del modelo: ejemplo "Entrenamiento" o "Prueba".
         print_results(bool): True si se desean imprimir los resultados.
     """
     accu, prec, reca, brier_score, cfm = None, None, None, None, None
     if print_results:
-        print(f"\nPerformance del modelo de {train_or_test}")
+        print(f"\nPerformance del modelo de {model_name}")
     if y_pred is not None:
         accu = accuracy_score(Y, y_pred)
         prec = precision_score(Y, y_pred, average='weighted')
         reca = recall_score(Y, y_pred, average='weighted')
         cfm = confusion_matrix(Y, y_pred)
         if print_results:
-            print(f' Accu {accu} \n Prec {prec} \n Reca {reca} \n Matriz de confusión:\n {cfm}')
+            plot_confusion_matrix(cfm, model_name, class_names)
+            print(f' Accu {accu} \n Prec {prec} \n Reca {reca}')
     
     if y_prob is not None and y_prob.shape[1] > 1:
         print("\nMétricas de Probabilidad:")
         brier_score = np.mean([brier_score_loss(Y == i, y_prob[:, i]) for i in range(y_prob.shape[1])])
-        # average='macro' para promediar sin considerar el desbalance de clases o average='weighted' para considerar el desbalance de clases).
-        # auc = roc_auc_score(Y, y_prob, multi_class="ovr", average="weighted")
         if print_results:
             print(f" Brier Score: {brier_score}")
-            plot_precision_recall_curve(n_classes, Y, y_prob, train_or_test)
-            plot_roc_curve(n_classes, Y, y_prob, train_or_test)
+            n_classes = len(class_names)
+            plot_evaluation_curves(n_classes, Y, y_prob, model_name)
 
 
     return accu, prec, reca, brier_score, cfm
 
+def plot_confusion_matrix(confusion_matrix, model_name, class_names):
+    # Create a heatmap to visualize the confusion matrix
+    plt.figure(figsize=(5, 3))
+    sns.heatmap(confusion_matrix, annot=True, fmt="d", cmap='Blues', xticklabels=class_names, yticklabels=class_names)
 
-import matplotlib.pyplot as plt
-from sklearn.metrics import precision_recall_curve, roc_curve
-def plot_precision_recall_curve(n_classes, y, y_prob, model_name):
-    y = one_hot_encode_labels(y)
-    # precision recall curve
+    # Adding labels and title
+    plt.xlabel('Clases predichas')
+    plt.ylabel('Clases verdaderas')
+    plt.title(f'Matriz de confusión {model_name}')
+    plt.show()
+
+def plot_evaluation_curves(n_classes, y, y_prob, model_name):
+    # One-hot encode labels if they are not already
+    y =  one_hot_encode_labels(y)
+    
+    # Prepare figure
+    plt.figure(figsize=(16, 6))
+    
+    # Plot Precision-Recall Curve
+    plt.subplot(1, 2, 1)
     precision = dict()
     recall = dict()
     for i in range(n_classes):
-        precision[i], recall[i], _ = precision_recall_curve(y[:, i],
-                                                            y_prob[:, i])
-        plt.plot(recall[i], precision[i], lw=2, label='class {}'.format(i))
-        
-    plt.xlabel("recall")
-    plt.ylabel("precision")
+        precision[i], recall[i], _ = precision_recall_curve(y[:, i], y_prob[:, i])
+        plt.plot(recall[i], precision[i], lw=2, label=f'Class {i}')
+    plt.xlabel("Recall")
+    plt.ylabel("Precision")
     plt.legend(loc="best")
-    plt.title(f"precision vs. recall curve {model_name}")
-    plt.show()
-
-def plot_roc_curve(n_classes, y, y_prob, model_name):
-    y = one_hot_encode_labels(y)
-    # roc curve
+    plt.title(f"Precision vs. Recall Curve for {model_name}")
+    
+    # Plot ROC Curve
+    plt.subplot(1, 2, 2)
     fpr = dict()
     tpr = dict()
-
     for i in range(n_classes):
-        fpr[i], tpr[i], _ = roc_curve(y[:, i],
-                                    y_prob[:, i])
-        plt.plot(fpr[i], tpr[i], lw=2, label='class {}'.format(i))
-
-    plt.xlabel("false positive rate")
-    plt.ylabel("true positive rate")
+        fpr[i], tpr[i], _ = roc_curve(y[:, i], y_prob[:, i])
+        plt.plot(fpr[i], tpr[i], lw=2, label=f'Class {i}')
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
     plt.legend(loc="best")
-    plt.title(f"ROC curve {model_name}")
+    plt.title(f"ROC Curve for {model_name}")
+    
+    # Show plots
+    plt.tight_layout()
     plt.show()
 
 
