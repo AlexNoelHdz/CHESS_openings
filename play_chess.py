@@ -16,7 +16,7 @@ while True:
     with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
         clean_console()
         displayed_board = display.start()
-        loaded_model = pickle.load(open("./pickles/models/xgoboost_model0410.pkl", 'rb'))
+        loaded_model = pickle.load(open("./pickles/models/xgoboost_model0416_18:06.pkl", 'rb'))
         board = chess.Board()
         if RANDOM_OPENINGS:
             openingsIA = OpeningsIA(engine, random=True)

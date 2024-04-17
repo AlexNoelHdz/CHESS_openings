@@ -131,7 +131,7 @@ class OpeningsIA:
 
     def show_position_predictions(self, board, loaded_model):
         prob = self.predict_position(board.fen(), board.ply(), loaded_model)
-        position_predictions = f"Negras: {'{:.6f}'.format(prob[0][0])}. Empate:{'{:.6f}'.format(prob[0][1])}. Blancas:{'{:.6f}'.format(prob[0][2])}"
+        position_predictions = f"Negras: {'{:.6f}'.format(prob[0][0])}. Blancas:{'{:.6f}'.format(prob[0][1])}"
         self.logger.write(position_predictions)
         print(position_predictions)
 
