@@ -1,0 +1,197 @@
+Apertura a practicar Scandinavian Defense
+================Openings IA================
+Movimientos comunes Scandinavian Defense: ['e4', 'b4'].
+IA mueve: e4
+Negras: 0.033019. Blancas:0.966981
+-----Turno 1:rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                      Casillas
+0     10     Casillas controladas por peon  ['a3', 'b3', 'c3', 'd3', 'd5', 'e3', 'f3', 'f5', 'g3', 'h3']
+1      5  Casillas controladas por caballo                           ['Na3', 'Nc3', 'Ne2', 'Nf3', 'Nh3']
+2      5    Casillas controladas por alfil                           ['Ba6', 'Bb5', 'Bc4', 'Bd3', 'Be2']
+3      0    Casillas controladas por torre                                                            []
+4      4    Casillas controladas por reina                                  ['Qe2', 'Qf3', 'Qg4', 'Qh5']
+5      1   Casillas controladas por el rey                                                       ['Ke2']
+6      9   Puntos de presion (>1 atacando)        ['a3', 'b3', 'c3', 'd3', 'e2', 'e3', 'f3', 'g3', 'h3']
+7      2            Diagonales controladas                                   {'c1': 0, 'f1': 1, 'd1': 1}
+8      0                Lineas controladas                                   {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                         Casillas
+     8    Casillas controladas por peon ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     4 Casillas controladas por caballo                     ['Na6', 'Nc6', 'Nf6', 'Nh6']
+     0   Casillas controladas por alfil                                               []
+     0   Casillas controladas por torre                                               []
+     0   Casillas controladas por reina                                               []
+     0  Casillas controladas por el rey                                               []
+     8  Puntos de presion (>1 atacando) ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     0           Diagonales controladas                      {'c8': 0, 'f8': 0, 'd8': 0}
+     0               Lineas controladas                      {'a8': 0, 'h8': 0, 'd8': 0}
+Apertura alcanzada: King's Pawn
+================HUMAN================
+Movimientos comunes Scandinavian Defense: ['d5', 'e5'].
+Humano mueve: d5
+Negras: 0.415379. Blancas:0.584621
+-----Turno 2:rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                      Casillas
+0     10     Casillas controladas por peon  ['a3', 'b3', 'c3', 'd3', 'd5', 'e3', 'f3', 'f5', 'g3', 'h3']
+1      5  Casillas controladas por caballo                           ['Na3', 'Nc3', 'Ne2', 'Nf3', 'Nh3']
+2      5    Casillas controladas por alfil                          ['Ba6', 'Bb5+', 'Bc4', 'Bd3', 'Be2']
+3      0    Casillas controladas por torre                                                            []
+4      4    Casillas controladas por reina                                  ['Qe2', 'Qf3', 'Qg4', 'Qh5']
+5      1   Casillas controladas por el rey                                                       ['Ke2']
+6      9   Puntos de presion (>1 atacando)        ['a3', 'b3', 'c3', 'd3', 'e2', 'e3', 'f3', 'g3', 'h3']
+7      2            Diagonales controladas                                   {'c1': 0, 'f1': 1, 'd1': 1}
+8      0                Lineas controladas                                   {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                                     Casillas
+    10    Casillas controladas por peon ['a6', 'b6', 'c4', 'c6', 'd6', 'e4', 'e6', 'f6', 'g6', 'h6']
+     5 Casillas controladas por caballo                          ['Na6', 'Nc6', 'Nd7', 'Nf6', 'Nh6']
+     5   Casillas controladas por alfil                          ['Bd7', 'Be6', 'Bf5', 'Bg4', 'Bh3']
+     0   Casillas controladas por torre                                                           []
+     2   Casillas controladas por reina                                               ['Qd6', 'Qd7']
+     1  Casillas controladas por el rey                                                      ['Kd7']
+     9  Puntos de presion (>1 atacando)       ['a6', 'b6', 'c6', 'd6', 'd7', 'e6', 'f6', 'g6', 'h6']
+     1           Diagonales controladas                                  {'c8': 1, 'f8': 0, 'd8': 0}
+     1               Lineas controladas                                  {'a8': 0, 'h8': 0, 'd8': 1}
+Apertura alcanzada: Scandinavian Defense
+================Openings IA================
+Movimientos comunes Scandinavian Defense: ['exd5', 'b3'].
+IA mueve: exd5
+Negras: 0.542055. Blancas:0.457945
+-----Turno 3:rnbqkbnr/ppp1pppp/8/3P4/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                      Casillas
+0     10     Casillas controladas por peon  ['a3', 'b3', 'c3', 'c6', 'd3', 'e3', 'e6', 'f3', 'g3', 'h3']
+1      5  Casillas controladas por caballo                           ['Na3', 'Nc3', 'Ne2', 'Nf3', 'Nh3']
+2      5    Casillas controladas por alfil                          ['Ba6', 'Bb5+', 'Bc4', 'Bd3', 'Be2']
+3      0    Casillas controladas por torre                                                            []
+4      4    Casillas controladas por reina                                  ['Qe2', 'Qf3', 'Qg4', 'Qh5']
+5      1   Casillas controladas por el rey                                                       ['Ke2']
+6      9   Puntos de presion (>1 atacando)        ['a3', 'b3', 'c3', 'd3', 'e2', 'e3', 'f3', 'g3', 'h3']
+7      2            Diagonales controladas                                   {'c1': 0, 'f1': 1, 'd1': 1}
+8      0                Lineas controladas                                   {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                               Casillas
+     8    Casillas controladas por peon       ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     5 Casillas controladas por caballo                    ['Na6', 'Nc6', 'Nd7', 'Nf6', 'Nh6']
+     5   Casillas controladas por alfil                    ['Bd7', 'Be6', 'Bf5', 'Bg4', 'Bh3']
+     0   Casillas controladas por torre                                                     []
+     3   Casillas controladas por reina                                 ['Qd6', 'Qd7', 'Qxd5']
+     1  Casillas controladas por el rey                                                ['Kd7']
+     9  Puntos de presion (>1 atacando) ['a6', 'b6', 'c6', 'd6', 'd7', 'e6', 'f6', 'g6', 'h6']
+     1           Diagonales controladas                            {'c8': 1, 'f8': 0, 'd8': 0}
+     1               Lineas controladas                            {'a8': 0, 'h8': 0, 'd8': 1}
+================HUMAN================
+Movimientos comunes Scandinavian Defense: ['Qxd5', 'Nf6', 'c6', 'e6'].
+Humano mueve: Qxd5
+Negras: 0.720408. Blancas:0.279592
+-----Turno 4:rnb1kbnr/ppp1pppp/8/3q4/8/8/PPPP1PPP/RNBQKBNR w KQkq - 0 3-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                Casillas
+0      8     Casillas controladas por peon        ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'g3', 'h3']
+1      5  Casillas controladas por caballo                     ['Na3', 'Nc3', 'Ne2', 'Nf3', 'Nh3']
+2      5    Casillas controladas por alfil                    ['Ba6', 'Bb5+', 'Bc4', 'Bd3', 'Be2']
+3      0    Casillas controladas por torre                                                      []
+4      4    Casillas controladas por reina                            ['Qe2', 'Qf3', 'Qg4', 'Qh5']
+5      1   Casillas controladas por el rey                                                 ['Ke2']
+6      9   Puntos de presion (>1 atacando)  ['a3', 'b3', 'c3', 'd3', 'e2', 'e3', 'f3', 'g3', 'h3']
+7      2            Diagonales controladas                             {'c1': 0, 'f1': 1, 'd1': 1}
+8      0                Lineas controladas                             {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                                                                                                                                   Casillas
+     8    Casillas controladas por peon                                                                                                           ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     5 Casillas controladas por caballo                                                                                                                        ['Na6', 'Nc6', 'Nd7', 'Nf6', 'Nh6']
+     5   Casillas controladas por alfil                                                                                                                        ['Bd7', 'Be6', 'Bf5', 'Bg4', 'Bh3']
+     0   Casillas controladas por torre                                                                                                                                                         []
+    21   Casillas controladas por reina ['Qa5', 'Qb3', 'Qb5', 'Qc4', 'Qc5', 'Qc6', 'Qd3', 'Qd4', 'Qd6', 'Qd7', 'Qd8', 'Qe4+', 'Qe5+', 'Qe6+', 'Qf3', 'Qf5', 'Qg5', 'Qh5', 'Qxa2', 'Qxd2+', 'Qxg2']
+     2  Casillas controladas por el rey                                                                                                                                             ['Kd7', 'Kd8']
+    11  Puntos de presion (>1 atacando)                                                                                         ['a6', 'b6', 'c6', 'd6', 'd7', 'd8', 'e6', 'f5', 'f6', 'g6', 'h6']
+     3           Diagonales controladas                                                                                                                                {'c8': 1, 'f8': 0, 'd5': 2}
+     4               Lineas controladas                                                                                                                                {'a8': 0, 'h8': 0, 'd5': 4}
+Apertura alcanzada: Scandinavian Defense: Mieses-Kotroc Variation
+================Openings IA================
+Movimientos comunes Scandinavian Defense: ['Nc3'].
+IA mueve: Nc3
+Negras: 0.349877. Blancas:0.650123
+-----Turno 5:rnb1kbnr/ppp1pppp/8/3q4/8/2N5/PPPP1PPP/R1BQKBNR b KQkq - 1 3-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                            Casillas
+0      8     Casillas controladas por peon                    ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'g3', 'h3']
+1      9  Casillas controladas por caballo  ['Na4', 'Nb1', 'Nb5', 'Nce2', 'Ne4', 'Nf3', 'Nge2', 'Nh3', 'Nxd5']
+2      5    Casillas controladas por alfil                                ['Ba6', 'Bb5+', 'Bc4', 'Bd3', 'Be2']
+3      1    Casillas controladas por torre                                                             ['Rb1']
+4      4    Casillas controladas por reina                                        ['Qe2', 'Qf3', 'Qg4', 'Qh5']
+5      1   Casillas controladas por el rey                                                             ['Ke2']
+6      9   Puntos de presion (>1 atacando)              ['b1', 'b3', 'b5', 'd3', 'e2', 'e3', 'f3', 'g3', 'h3']
+7      2            Diagonales controladas                                         {'c1': 0, 'f1': 1, 'd1': 1}
+8      0                Lineas controladas                                         {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                                                                                                                                   Casillas
+     8    Casillas controladas por peon                                                                                                           ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     5 Casillas controladas por caballo                                                                                                                        ['Na6', 'Nc6', 'Nd7', 'Nf6', 'Nh6']
+     5   Casillas controladas por alfil                                                                                                                        ['Bd7', 'Be6', 'Bf5', 'Bg4', 'Bh3']
+     0   Casillas controladas por torre                                                                                                                                                         []
+    21   Casillas controladas por reina ['Qa5', 'Qb3', 'Qb5', 'Qc4', 'Qc5', 'Qc6', 'Qd3', 'Qd4', 'Qd6', 'Qd7', 'Qd8', 'Qe4+', 'Qe5+', 'Qe6+', 'Qf3', 'Qf5', 'Qg5', 'Qh5', 'Qxa2', 'Qxd2+', 'Qxg2']
+     2  Casillas controladas por el rey                                                                                                                                             ['Kd7', 'Kd8']
+    11  Puntos de presion (>1 atacando)                                                                                         ['a6', 'b6', 'c6', 'd6', 'd7', 'd8', 'e6', 'f5', 'f6', 'g6', 'h6']
+     3           Diagonales controladas                                                                                                                                {'c8': 1, 'f8': 0, 'd5': 2}
+     4               Lineas controladas                                                                                                                                {'a8': 0, 'h8': 0, 'd5': 4}
+================HUMAN================
+Movimientos comunes Scandinavian Defense: ['Qa5', 'Qd6'].
+Humano mueve: Qa5
+Negras: 0.241828. Blancas:0.758172
+-----Turno 6:rnb1kbnr/ppp1pppp/8/q7/8/2N5/PPPP1PPP/R1BQKBNR w KQkq - 2 4-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                           Casillas
+0      8     Casillas controladas por peon                   ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'g3', 'h3']
+1      9  Casillas controladas por caballo  ['Na4', 'Nb1', 'Nb5', 'Nce2', 'Nd5', 'Ne4', 'Nf3', 'Nge2', 'Nh3']
+2      5    Casillas controladas por alfil                               ['Ba6', 'Bb5+', 'Bc4', 'Bd3', 'Be2']
+3      1    Casillas controladas por torre                                                            ['Rb1']
+4      4    Casillas controladas por reina                                       ['Qe2', 'Qf3', 'Qg4', 'Qh5']
+5      1   Casillas controladas por el rey                                                            ['Ke2']
+6      9   Puntos de presion (>1 atacando)             ['b1', 'b3', 'b5', 'd3', 'e2', 'e3', 'f3', 'g3', 'h3']
+7      2            Diagonales controladas                                        {'c1': 0, 'f1': 1, 'd1': 1}
+8      0                Lineas controladas                                        {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                                                                              Casillas
+     8    Casillas controladas por peon                                                      ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     5 Casillas controladas por caballo                                                                   ['Na6', 'Nc6', 'Nd7', 'Nf6', 'Nh6']
+     5   Casillas controladas por alfil                                                                   ['Bd7', 'Be6', 'Bf5', 'Bg4', 'Bh3']
+     0   Casillas controladas por torre                                                                                                    []
+    14   Casillas controladas por reina ['Qa3', 'Qa4', 'Qa6', 'Qb4', 'Qb5', 'Qb6', 'Qc5', 'Qd5', 'Qe5+', 'Qf5', 'Qg5', 'Qh5', 'Qxa2', 'Qxc3']
+     2  Casillas controladas por el rey                                                                                        ['Kd7', 'Kd8']
+    10  Puntos de presion (>1 atacando)                                          ['a6', 'b6', 'c6', 'd6', 'd7', 'e6', 'f5', 'f6', 'g6', 'h6']
+     2           Diagonales controladas                                                                           {'c8': 1, 'f8': 0, 'a5': 1}
+     2               Lineas controladas                                                                           {'a8': 0, 'h8': 0, 'a5': 2}
+Apertura alcanzada: Scandinavian Defense: Main Line
+================Openings IA================
+Movimientos comunes Scandinavian Defense: ['d4', 'b4', 'Nf3'].
+IA mueve: d4
+Negras: 0.196258. Blancas:0.803742
+-----Turno 7:rnb1kbnr/ppp1pppp/8/q7/3P4/2N5/PPP2PPP/R1BQKBNR b KQkq - 0 4-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                                 Casillas
+0     10     Casillas controladas por peon             ['a3', 'b3', 'c3', 'c5', 'd3', 'e3', 'e5', 'f3', 'g3', 'h3']
+1      3  Casillas controladas por caballo                                                    ['Ne2', 'Nf3', 'Nh3']
+2     10    Casillas controladas por alfil  ['Ba6', 'Bb5+', 'Bc4', 'Bd2', 'Bd3', 'Be2', 'Be3', 'Bf4', 'Bg5', 'Bh6']
+3      1    Casillas controladas por torre                                                                  ['Rb1']
+4      6    Casillas controladas por reina                               ['Qd2', 'Qd3', 'Qe2', 'Qf3', 'Qg4', 'Qh5']
+5      2   Casillas controladas por el rey                                                           ['Kd2', 'Ke2']
+6     10   Puntos de presion (>1 atacando)             ['b1', 'b3', 'b5', 'd2', 'd3', 'e2', 'e3', 'f3', 'g3', 'h3']
+7      3            Diagonales controladas                                              {'c1': 1, 'f1': 1, 'd1': 1}
+8      1                Lineas controladas                                              {'a1': 0, 'h1': 0, 'd1': 1}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                                                                               Casillas
+     8    Casillas controladas por peon                                                       ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     5 Casillas controladas por caballo                                                                    ['Na6', 'Nc6', 'Nd7', 'Nf6', 'Nh6']
+     5   Casillas controladas por alfil                                                                    ['Bd7', 'Be6', 'Bf5', 'Bg4', 'Bh3']
+     0   Casillas controladas por torre                                                                                                     []
+    14   Casillas controladas por reina ['Qa3', 'Qa4', 'Qa6', 'Qb4', 'Qb5', 'Qb6', 'Qc5', 'Qd5', 'Qe5+', 'Qf5', 'Qg5', 'Qh5', 'Qxa2', 'Qxc3+']
+     2  Casillas controladas por el rey                                                                                         ['Kd7', 'Kd8']
+    10  Puntos de presion (>1 atacando)                                           ['a6', 'b6', 'c6', 'd6', 'd7', 'e6', 'f5', 'f6', 'g6', 'h6']
+     2           Diagonales controladas                                                                            {'c8': 1, 'f8': 0, 'a5': 1}
+     2               Lineas controladas                                                                            {'a8': 0, 'h8': 0, 'a5': 2}
+================HUMAN================
+Movimientos comunes Scandinavian Defense: ['Nf6', 'e5'].
+Humano mueve: x

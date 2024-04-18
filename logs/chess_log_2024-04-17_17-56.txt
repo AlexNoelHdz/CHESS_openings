@@ -1,0 +1,117 @@
+Apertura a practicar Sicilian Defense
+================Openings IA================
+Movimientos comunes Sicilian Defense: ['e4', 'Nf3', 'd4', 'g3', 'Nc3', 'c4', 'f4'].
+IA mueve: g3
+Negras: 0.354233. Blancas:0.645767
+-----Turno 1:rnbqkbnr/pppppppp/8/8/8/6P1/PPPPPP1P/RNBQKBNR b KQkq - 0 1-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                Casillas
+0      9     Casillas controladas por peon  ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'f4', 'g3', 'h4']
+1      4  Casillas controladas por caballo                            ['Na3', 'Nc3', 'Nf3', 'Nh3']
+2      2    Casillas controladas por alfil                                          ['Bg2', 'Bh3']
+3      0    Casillas controladas por torre                                                      []
+4      0    Casillas controladas por reina                                                      []
+5      0   Casillas controladas por el rey                                                      []
+6      7   Puntos de presion (>1 atacando)              ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'h3']
+7      1            Diagonales controladas                             {'c1': 0, 'f1': 1, 'd1': 0}
+8      0                Lineas controladas                             {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                         Casillas
+     8    Casillas controladas por peon ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     4 Casillas controladas por caballo                     ['Na6', 'Nc6', 'Nf6', 'Nh6']
+     0   Casillas controladas por alfil                                               []
+     0   Casillas controladas por torre                                               []
+     0   Casillas controladas por reina                                               []
+     0  Casillas controladas por el rey                                               []
+     8  Puntos de presion (>1 atacando) ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     0           Diagonales controladas                      {'c8': 0, 'f8': 0, 'd8': 0}
+     0               Lineas controladas                      {'a8': 0, 'h8': 0, 'd8': 0}
+Apertura alcanzada: Hungarian Opening
+================HUMAN================
+Movimientos comunes Sicilian Defense: ['c5'].
+Humano mueve: c5
+Negras: 0.665120. Blancas:0.334880
+-----Turno 2:rnbqkbnr/pp1ppppp/8/2p5/8/6P1/PPPPPP1P/RNBQKBNR w KQkq - 0 2-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                Casillas
+0      9     Casillas controladas por peon  ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'f4', 'g3', 'h4']
+1      4  Casillas controladas por caballo                            ['Na3', 'Nc3', 'Nf3', 'Nh3']
+2      2    Casillas controladas por alfil                                          ['Bg2', 'Bh3']
+3      0    Casillas controladas por torre                                                      []
+4      0    Casillas controladas por reina                                                      []
+5      0   Casillas controladas por el rey                                                      []
+6      7   Puntos de presion (>1 atacando)              ['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'h3']
+7      1            Diagonales controladas                             {'c1': 0, 'f1': 1, 'd1': 0}
+8      0                Lineas controladas                             {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                                     Casillas
+    10    Casillas controladas por peon ['a6', 'b4', 'b6', 'c6', 'd4', 'd6', 'e6', 'f6', 'g6', 'h6']
+     4 Casillas controladas por caballo                                 ['Na6', 'Nc6', 'Nf6', 'Nh6']
+     0   Casillas controladas por alfil                                                           []
+     0   Casillas controladas por torre                                                           []
+     3   Casillas controladas por reina                                        ['Qa5', 'Qb6', 'Qc7']
+     0  Casillas controladas por el rey                                                           []
+     7  Puntos de presion (>1 atacando)                   ['a6', 'b6', 'c6', 'e6', 'f6', 'g6', 'h6']
+     1           Diagonales controladas                                  {'c8': 0, 'f8': 0, 'd8': 1}
+     0               Lineas controladas                                  {'a8': 0, 'h8': 0, 'd8': 0}
+Apertura alcanzada: Hungarian Opening: Sicilian Invitation
+================Openings IA================
+IA mueve: c4
+Negras: 0.611936. Blancas:0.388064
+-----Turno 3:rnbqkbnr/pp1ppppp/8/2p5/2P5/6P1/PP1PPP1P/RNBQKBNR b KQkq - 0 2-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                            Casillas
+0     11     Casillas controladas por peon  ['a3', 'b3', 'b5', 'c3', 'd3', 'd5', 'e3', 'f3', 'f4', 'g3', 'h4']
+1      4  Casillas controladas por caballo                                        ['Na3', 'Nc3', 'Nf3', 'Nh3']
+2      2    Casillas controladas por alfil                                                      ['Bg2', 'Bh3']
+3      0    Casillas controladas por torre                                                                  []
+4      3    Casillas controladas por reina                                               ['Qa4', 'Qb3', 'Qc2']
+5      0   Casillas controladas por el rey                                                                  []
+6      6   Puntos de presion (>1 atacando)                                ['a3', 'b3', 'c3', 'e3', 'f3', 'h3']
+7      2            Diagonales controladas                                         {'c1': 0, 'f1': 1, 'd1': 1}
+8      0                Lineas controladas                                         {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                                     Casillas
+    10    Casillas controladas por peon ['a6', 'b4', 'b6', 'c6', 'd4', 'd6', 'e6', 'f6', 'g6', 'h6']
+     4 Casillas controladas por caballo                                 ['Na6', 'Nc6', 'Nf6', 'Nh6']
+     0   Casillas controladas por alfil                                                           []
+     0   Casillas controladas por torre                                                           []
+     3   Casillas controladas por reina                                        ['Qa5', 'Qb6', 'Qc7']
+     0  Casillas controladas por el rey                                                           []
+     7  Puntos de presion (>1 atacando)                   ['a6', 'b6', 'c6', 'e6', 'f6', 'g6', 'h6']
+     1           Diagonales controladas                                  {'c8': 0, 'f8': 0, 'd8': 1}
+     0               Lineas controladas                                  {'a8': 0, 'h8': 0, 'd8': 0}
+================HUMAN================
+Humano mueve: x
+Apertura a practicar Torre Attack
+================Openings IA================
+Movimientos comunes Torre Attack: ['d4', 'Nf3'].
+IA mueve: d4
+Negras: 0.246324. Blancas:0.753676
+-----Turno 1:rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq - 0 1-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                      Casillas
+0     10     Casillas controladas por peon  ['a3', 'b3', 'c3', 'c5', 'd3', 'e3', 'e5', 'f3', 'g3', 'h3']
+1      5  Casillas controladas por caballo                           ['Na3', 'Nc3', 'Nd2', 'Nf3', 'Nh3']
+2      5    Casillas controladas por alfil                           ['Bd2', 'Be3', 'Bf4', 'Bg5', 'Bh6']
+3      0    Casillas controladas por torre                                                            []
+4      2    Casillas controladas por reina                                                ['Qd2', 'Qd3']
+5      1   Casillas controladas por el rey                                                       ['Kd2']
+6      9   Puntos de presion (>1 atacando)        ['a3', 'b3', 'c3', 'd2', 'd3', 'e3', 'f3', 'g3', 'h3']
+7      1            Diagonales controladas                                   {'c1': 1, 'f1': 0, 'd1': 0}
+8      1                Lineas controladas                                   {'a1': 0, 'h1': 0, 'd1': 1}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                         Casillas
+     8    Casillas controladas por peon ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     4 Casillas controladas por caballo                     ['Na6', 'Nc6', 'Nf6', 'Nh6']
+     0   Casillas controladas por alfil                                               []
+     0   Casillas controladas por torre                                               []
+     0   Casillas controladas por reina                                               []
+     0  Casillas controladas por el rey                                               []
+     8  Puntos de presion (>1 atacando) ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     0           Diagonales controladas                      {'c8': 0, 'f8': 0, 'd8': 0}
+     0               Lineas controladas                      {'a8': 0, 'h8': 0, 'd8': 0}
+Apertura alcanzada: Queen's Pawn
+================HUMAN================
+Movimientos comunes Torre Attack: ['Nf6'].
+Humano mueve: z
