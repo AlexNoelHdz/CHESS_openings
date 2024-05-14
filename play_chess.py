@@ -15,9 +15,7 @@ RANDOM_OPENINGS = True
 while True:
     with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
         clean_console()
-        displayed_board = display.start()
-        loaded_model = pickle.load(open("./pickles/models/xgoboost_model0416_18:06.pkl", 'rb'))
-        board = chess.Board()
+        
         if RANDOM_OPENINGS:
             openingsIA = OpeningsIA(engine, random=True)
             input("'z' para reiniciar. 'x' para cerrar. 'Enter' iniciar:")
@@ -26,6 +24,9 @@ while True:
             b_or_w_input = input("Blancas 'w' o negras 'b': ")
             openingsIA = OpeningsIA(engine, opening_shortname = opening_shortname, b_or_w_input = b_or_w_input)
         
+        displayed_board = display.start()
+        loaded_model = pickle.load(open("./pickles/models/xgoboost_model0416_18:06.pkl", 'rb'))
+        board = chess.Board()
 
         while not board.is_game_over() and not openingsIA.restart_game:
             unique_opening_moves, turn_column_name = openingsIA.get_unique_opening_moves(board.turn, board.fullmove_number)

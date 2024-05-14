@@ -1,0 +1,106 @@
+Apertura a practicar Australian Defense
+================Openings IA================
+Movimientos comunes Australian Defense: ['d4'].
+IA mueve: d4
+Negras: 0.246324. Blancas:0.753676
+-----Turno 1:rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq - 0 1-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                      Casillas
+0     10     Casillas controladas por peon  ['a3', 'b3', 'c3', 'c5', 'd3', 'e3', 'e5', 'f3', 'g3', 'h3']
+1      5  Casillas controladas por caballo                           ['Na3', 'Nc3', 'Nd2', 'Nf3', 'Nh3']
+2      5    Casillas controladas por alfil                           ['Bd2', 'Be3', 'Bf4', 'Bg5', 'Bh6']
+3      0    Casillas controladas por torre                                                            []
+4      2    Casillas controladas por reina                                                ['Qd2', 'Qd3']
+5      1   Casillas controladas por el rey                                                       ['Kd2']
+6      9   Puntos de presion (>1 atacando)        ['a3', 'b3', 'c3', 'd2', 'd3', 'e3', 'f3', 'g3', 'h3']
+7      1            Diagonales controladas                                   {'c1': 1, 'f1': 0, 'd1': 0}
+8      1                Lineas controladas                                   {'a1': 0, 'h1': 0, 'd1': 1}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                         Casillas
+     8    Casillas controladas por peon ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     4 Casillas controladas por caballo                     ['Na6', 'Nc6', 'Nf6', 'Nh6']
+     0   Casillas controladas por alfil                                               []
+     0   Casillas controladas por torre                                               []
+     0   Casillas controladas por reina                                               []
+     0  Casillas controladas por el rey                                               []
+     8  Puntos de presion (>1 atacando) ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     0           Diagonales controladas                      {'c8': 0, 'f8': 0, 'd8': 0}
+     0               Lineas controladas                      {'a8': 0, 'h8': 0, 'd8': 0}
+Apertura alcanzada: Queen's Pawn
+================HUMAN================
+Humano mueve: z
+Apertura a practicar Gedult's Opening
+================Openings IA================
+Movimientos comunes Gedult's Opening: ['f3'].
+IA mueve: f3
+Negras: 0.117089. Blancas:0.882911
+-----Turno 1:rnbqkbnr/pppppppp/8/8/8/5P2/PPPPP1PP/RNBQKBNR b KQkq - 0 1-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                      Casillas
+0     10     Casillas controladas por peon  ['a3', 'b3', 'c3', 'd3', 'e3', 'e4', 'f3', 'g3', 'g4', 'h3']
+1      3  Casillas controladas por caballo                                         ['Na3', 'Nc3', 'Nh3']
+2      0    Casillas controladas por alfil                                                            []
+3      0    Casillas controladas por torre                                                            []
+4      0    Casillas controladas por reina                                                            []
+5      1   Casillas controladas por el rey                                                       ['Kf2']
+6      5   Puntos de presion (>1 atacando)                                ['a3', 'b3', 'c3', 'd3', 'h3']
+7      0            Diagonales controladas                                   {'c1': 0, 'f1': 0, 'd1': 0}
+8      0                Lineas controladas                                   {'a1': 0, 'h1': 0, 'd1': 0}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                         Casillas
+     8    Casillas controladas por peon ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     4 Casillas controladas por caballo                     ['Na6', 'Nc6', 'Nf6', 'Nh6']
+     0   Casillas controladas por alfil                                               []
+     0   Casillas controladas por torre                                               []
+     0   Casillas controladas por reina                                               []
+     0  Casillas controladas por el rey                                               []
+     8  Puntos de presion (>1 atacando) ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     0           Diagonales controladas                      {'c8': 0, 'f8': 0, 'd8': 0}
+     0               Lineas controladas                      {'a8': 0, 'h8': 0, 'd8': 0}
+Apertura alcanzada: Gedult's Opening
+================HUMAN================
+Humano mueve: z
+Apertura a practicar Elephant Gambit
+================HUMAN================
+Movimientos comunes Elephant Gambit: ['e4', 'Nf3'].
+Humano mueve: z
+Apertura a practicar Three Knights Opening
+================HUMAN================
+Movimientos comunes Three Knights Opening: ['e4', 'Nc3', 'Nf3'].
+Humano mueve: z
+Apertura a practicar Nimzowitsch Defense
+================Openings IA================
+Movimientos comunes Nimzowitsch Defense: ['e4', 'd4'].
+IA mueve: d4
+Negras: 0.246324. Blancas:0.753676
+-----Turno 1:rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq - 0 1-----
+---------------Posicion Blancas---------------
+   Total                    Caracteristica                                                      Casillas
+0     10     Casillas controladas por peon  ['a3', 'b3', 'c3', 'c5', 'd3', 'e3', 'e5', 'f3', 'g3', 'h3']
+1      5  Casillas controladas por caballo                           ['Na3', 'Nc3', 'Nd2', 'Nf3', 'Nh3']
+2      5    Casillas controladas por alfil                           ['Bd2', 'Be3', 'Bf4', 'Bg5', 'Bh6']
+3      0    Casillas controladas por torre                                                            []
+4      2    Casillas controladas por reina                                                ['Qd2', 'Qd3']
+5      1   Casillas controladas por el rey                                                       ['Kd2']
+6      9   Puntos de presion (>1 atacando)        ['a3', 'b3', 'c3', 'd2', 'd3', 'e3', 'f3', 'g3', 'h3']
+7      1            Diagonales controladas                                   {'c1': 1, 'f1': 0, 'd1': 0}
+8      1                Lineas controladas                                   {'a1': 0, 'h1': 0, 'd1': 1}
+---------------Posicion Negras---------------
+ Total                   Caracteristica                                         Casillas
+     8    Casillas controladas por peon ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     4 Casillas controladas por caballo                     ['Na6', 'Nc6', 'Nf6', 'Nh6']
+     0   Casillas controladas por alfil                                               []
+     0   Casillas controladas por torre                                               []
+     0   Casillas controladas por reina                                               []
+     0  Casillas controladas por el rey                                               []
+     8  Puntos de presion (>1 atacando) ['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6']
+     0           Diagonales controladas                      {'c8': 0, 'f8': 0, 'd8': 0}
+     0               Lineas controladas                      {'a8': 0, 'h8': 0, 'd8': 0}
+Apertura alcanzada: Queen's Pawn
+================HUMAN================
+Movimientos comunes Nimzowitsch Defense: ['d5', 'Nc6', 'd6', 'e5'].
+Humano mueve: z
+Apertura a practicar Amazon Attack
+================HUMAN================
+Movimientos comunes Amazon Attack: ['d4'].
+Humano mueve: z
